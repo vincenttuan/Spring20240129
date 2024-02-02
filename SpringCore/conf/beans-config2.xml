@@ -71,7 +71,7 @@
 	<bean id="size" c:name="A4" class="com.spring.core.session02.bean.Size" />
 	
 	<!-- Paper 自動配置-byType  -->
-	<bean id="paper1" class="com.spring.core.session02.bean.Color" autowire="byType" />
+	<bean id="paper1" class="com.spring.core.session02.bean.Paper" autowire="byType" />
 	
 </beans>       
 
