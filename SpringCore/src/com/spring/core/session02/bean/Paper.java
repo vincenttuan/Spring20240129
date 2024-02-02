@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Paper {
-	private Integer id;
 	private Color color;
 	private Size size;
 }

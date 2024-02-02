@@ -64,7 +64,15 @@
 		  c:name="R" c:price="380" c:author-ref="author2" />		  
 	<bean id="book8" 
 		  class="com.spring.core.session02.bean.Book" 
-		  p:name="Kotlin" p:price="480" p:author-ref="author1" />		  		  
+		  p:name="Kotlin" p:price="480" p:author-ref="author1" />
+		  
+	<!-- 配置 Color, Size -->
+	<bean id="color" c:name="白" class="com.spring.core.session02.bean.Color" />
+	<bean id="size" c:name="A4" class="com.spring.core.session02.bean.Size" />
+	
+	<!-- Paper 自動配置-byType  -->
+	<bean id="paper1" class="com.spring.core.session02.bean.Color" autowire="byType" />
+	
 </beans>       
 
 
