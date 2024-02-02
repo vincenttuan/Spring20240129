@@ -31,12 +31,13 @@ public class TestBook {
 		Book book8 = ctx.getBean("book8", Book.class);
 		
 		List<Book> books = List.of(book1, book2, book3, book4, book5, book6, book7, book8);
-		// 請計算並印出所有書籍的總價格 ?
+		// 1.請計算並印出所有書籍的總價格 ?
 		
-		// 請計算並印出作者為男性的書籍總價 ?
+		// 2.請計算並印出作者為男性的書籍總價 ?
 		
-		// 請計算並印出作者為女性的書籍總價 ?
+		// 3.請計算並印出作者為女性的書籍總價 ?
 		
+		// 4.請計算出 book1 ~ book8 作者的平均年齡 ?
 		
 
 	}
