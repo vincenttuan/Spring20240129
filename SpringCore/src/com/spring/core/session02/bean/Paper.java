@@ -6,8 +6,12 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Paper {
-	private Color color;
-	private Size size;
+	private Color black;
+	private Size b5;
+	
+	public Paper(Color black, Size a3) {
+		this.black = black;
+		this.b5 = a3;
+	}
 }

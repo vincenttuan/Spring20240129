@@ -76,7 +76,7 @@
 	<!-- 
 	<bean id="paper1" class="com.spring.core.session02.bean.Paper" autowire="byType" />
 	-->
-	<!-- Paper 自動配置-byName-->
+	<!-- Paper 自動配置-byName , constructor -->
 	<bean id="paper1" class="com.spring.core.session02.bean.Paper" autowire="byName" />
 	
 </beans>       
