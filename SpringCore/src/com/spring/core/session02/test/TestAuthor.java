@@ -20,6 +20,12 @@ public class TestAuthor {
 		
 		Author author3 = ctx.getBean("author3", Author.class);
 		System.out.println(author3);
+		
+		Author author4 = ctx.getBean("author4", Author.class);
+		System.out.println(author4);
+		
+		Author author5 = ctx.getBean("author5", Author.class);
+		System.out.println(author5);
 	}
 
 }
