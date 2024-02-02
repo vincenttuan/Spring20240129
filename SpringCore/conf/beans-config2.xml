@@ -64,7 +64,7 @@
 		  c:name="R" c:price="380" c:author-ref="author2" />		  
 	<bean id="book8" 
 		  class="com.spring.core.session02.bean.Book" 
-		  c:name="Kotlin" c:price="480" c:author-ref="author1" />		  		  
+		  p:name="Kotlin" p:price="480" p:author-ref="author1" />		  		  
 </beans>       
 
 
