@@ -12,6 +12,8 @@ public class TestLotto {
 		ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringConfig.class);
 		Lotto lotto = ctx.getBean("lotto", Lotto.class);
 		System.out.println(lotto);
+		Lotto lotto2 = ctx.getBean("lotto", Lotto.class);
+		System.out.println(lotto2);
 
 	}
 

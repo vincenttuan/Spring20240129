@@ -17,6 +17,8 @@ public class SpringConfig {
 	}
 	
 	@Bean(name = "lotto")
+	//@Scope("singleton") // 預設-單一實體
+	@Scope("prototype") // 支援多實體
 	public Lotto getLotto() {
 		Lotto lotto = new Lotto();
 		return lotto;
