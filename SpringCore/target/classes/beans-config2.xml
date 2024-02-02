@@ -70,7 +70,7 @@
 	<bean id="color" c:name="白" class="com.spring.core.session02.bean.Color" />
 	<bean id="size" c:name="A4" class="com.spring.core.session02.bean.Size" />
 	<bean id="black" c:name="黑" class="com.spring.core.session02.bean.Color" />
-	<bean id="b5" c:name="B5" class="com.spring.core.session02.bean.Color" />
+	<bean id="b5" c:name="B5" class="com.spring.core.session02.bean.Size" />
 	
 	<!-- Paper 自動配置-byType  -->
 	<bean id="paper1" class="com.spring.core.session02.bean.Paper" autowire="byType" />
