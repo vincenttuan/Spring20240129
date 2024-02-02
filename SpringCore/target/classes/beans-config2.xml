@@ -72,9 +72,12 @@
 	<bean id="black" c:name="黑" class="com.spring.core.session02.bean.Color" />
 	<bean id="b5" c:name="B5" class="com.spring.core.session02.bean.Size" />
 	
-	<!-- Paper 自動配置-byType  -->
+	<!-- Paper 自動配置-byType , 若有配對到二個含以上會發生錯誤 -->
+	<!-- 
 	<bean id="paper1" class="com.spring.core.session02.bean.Paper" autowire="byType" />
-	
+	-->
+	<!-- Paper 自動配置-byName-->
+	<bean id="paper1" class="com.spring.core.session02.bean.Paper" autowire="byName" />
 	
 </beans>       
 
