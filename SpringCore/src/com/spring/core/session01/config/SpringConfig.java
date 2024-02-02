@@ -2,6 +2,7 @@ package com.spring.core.session01.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
 import com.spring.core.session01.bean.Hello;
 import com.spring.core.session01.bean.Lotto;
