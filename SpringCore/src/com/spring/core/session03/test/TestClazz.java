@@ -1,6 +1,8 @@
 package com.spring.core.session03.test;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -42,6 +44,13 @@ public class TestClazz {
 		   .filter(clazz -> clazz.getCredit().equals(min))
 		   .findFirst()
 		   .ifPresent(clazz -> System.out.printf("學分最低科目: %s 學分: %d%n", clazz.getName(), clazz.getCredit()));
+		
+		// 利用比較類別 Comparator(比較器) 來找到最高與最低科目
+		Optional<Clazz> maxCreditClazz = clazzs.stream().max(Comparator.comparingInt(Clazz::getCredit));
+		Optional<Clazz> minCreditClazz = clazzs.stream().min(Comparator.comparingInt(Clazz::getCredit));
+		maxCreditClazz.ifPresent(clazz -> System.out.printf("學分最高科目: %s 學分: %d%n", clazz.getName(), clazz.getCredit()));
+		minCreditClazz.ifPresent(clazz -> System.out.printf("學分最低科目: %s 學分: %d%n", clazz.getName(), clazz.getCredit()));
+		
 		
 		
 	}
