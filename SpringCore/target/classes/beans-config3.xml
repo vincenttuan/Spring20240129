@@ -38,6 +38,9 @@
     <bean id="iq5" p:country="${IQ.country5}" p:score="${IQ.score5}" class="com.spring.core.session03.bean.IQ"/>
     <bean id="iq6" p:country="${IQ.country6}" p:score="${IQ.score6}" class="com.spring.core.session03.bean.IQ"/>
     
+    <!-- 建立 CarFactory -->
+    <bean id="carFactory" class="com.spring.core.session03.bean.CarFactory" />
+    
 </beans>       
 
 
