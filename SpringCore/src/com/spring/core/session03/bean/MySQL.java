@@ -11,7 +11,7 @@ public class MySQL {
 		System.out.println("資料查詢...");
 	}
 	
-	public void destory() {
+	public void destroy() {
 		System.out.println("資料庫連線關閉中");
 		// ...
 		System.out.println("關閉成功");
