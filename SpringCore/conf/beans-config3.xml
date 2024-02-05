@@ -31,6 +31,12 @@
     	  p:credit="${clazz.credit3}"
     	  class="com.spring.core.session03.bean.Clazz" />    	  
     
+    <bean id="iq1" p:country="${IQ.country1}" p:score="${IO.score1}" class="com.spring.core.session03.bean.IQ"/>
+    <bean id="iq2" p:country="${IQ.country2}" p:score="${IO.score2}" class="com.spring.core.session03.bean.IQ"/>
+    <bean id="iq3" p:country="${IQ.country3}" p:score="${IO.score3}" class="com.spring.core.session03.bean.IQ"/>
+    <bean id="iq4" p:country="${IQ.country4}" p:score="${IO.score4}" class="com.spring.core.session03.bean.IQ"/>
+    <bean id="iq5" p:country="${IQ.country5}" p:score="${IO.score5}" class="com.spring.core.session03.bean.IQ"/>
+    <bean id="iq6" p:country="${IQ.country6}" p:score="${IO.score6}" class="com.spring.core.session03.bean.IQ"/>
     
 </beans>       
 
