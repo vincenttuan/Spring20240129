@@ -10,7 +10,20 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">    
     
     <!-- 引用外部資源 -->
-    <context:property-placeholder location="data.properties" />
+    <bean id="propertyConfigurer"
+      class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+	    <property name="locations">
+	        <list>
+	            <value>classpath:data.properties</value>
+	        </list>
+	    </property>
+	    <property name="fileEncoding" value="UTF-8"/>
+	</bean>
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	    <property name="properties" ref="propertyConfigurer"/>
+	</bean>
+    
     
     <!-- 透過外部資源注入資料 -->
     <bean id="clazz1"

@@ -20,7 +20,8 @@ public class TestIQ {
 				ctx.getBean("iq6", IQ.class));
 		// 最高分的有那些國家 ?
 		int highScore = iqs.stream().mapToInt(IQ::getScore).max().getAsInt();
-		iqs.stream().filter(iq -> iq.getScore().equals(highScore)).forEach(System.out::println);
+		iqs.stream().filter(iq -> iq.getScore().equals(highScore))
+					.forEach(System.out::println);
 		
 	}
 
