@@ -43,6 +43,7 @@
     <bean id="carFactory" scope="singleton" class="com.spring.core.session03.bean.CarFactory" />
     
     <bean id="mysql"
+    	  scope="singleton"
     	  init-method="init"
     	  destroy-method="destroy" 
     	  class="com.spring.core.session03.bean.MySQL"></bean>
