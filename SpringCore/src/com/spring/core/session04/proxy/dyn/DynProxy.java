@@ -34,10 +34,8 @@ public class DynProxy {
 				resultObj = method.invoke(object, args); // 第一的參數要放的是被代理對象的物件
 			} finally {
 				// End:後置通知
-				System.out.printf("%s 結束", resultObj.getClass().getSimpleName());
+				System.out.printf("%s 結束", object.getClass().getSimpleName());
 			}
-			
-			
 			
 			return resultObj;
 		};
