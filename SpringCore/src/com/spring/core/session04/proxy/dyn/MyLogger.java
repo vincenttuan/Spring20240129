@@ -3,6 +3,8 @@ package com.spring.core.session04.proxy.dyn;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
+// 集中管理公用邏輯
+// Aspect 切面程式 (AOP)
 public class MyLogger {
 	
 	// Before:前置通知
