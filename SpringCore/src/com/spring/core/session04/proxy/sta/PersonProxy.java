@@ -14,6 +14,7 @@ public class PersonProxy implements Person {
 	//@Override
 	public void work() {
 		// 公用邏輯-前置通知
+		System.out.println(person.getClass().getSimpleName());
 		System.out.println("戴口罩");
 		System.out.println("檢查小黃卡...");
 		
