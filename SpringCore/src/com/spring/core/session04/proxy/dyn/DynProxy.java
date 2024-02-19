@@ -1,5 +1,6 @@
 package com.spring.core.session04.proxy.dyn;
 
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
 // 動態代理
@@ -19,6 +20,8 @@ public class DynProxy {
 		ClassLoader loader = object.getClass().getClassLoader();
 		// 2. 被代理對象所實作的介面
 		Class<?>[] interfaces = object.getClass().getInterfaces();
+		// 3. 處理代理的實現
+		InvocationHandler handler;
 		
 		// 取得代理實體
 		proxyObj = Proxy.newProxyInstance(loader, interfaces, handler);
