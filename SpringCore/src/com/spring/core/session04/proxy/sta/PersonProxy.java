@@ -18,10 +18,16 @@ public class PersonProxy implements Person {
 		System.out.println("檢查小黃卡...");
 		
 		// 執行(被代理物件的)業務方法
-		person.work();
+		try {
+			person.work();
+		} catch (Exception e) {
+			// 公用邏輯-異常通知(統一捕捉錯誤)
+			System.out.println(e);
+		} finally {
+			// 公用邏輯-後置通知(一定會被執行)
+			System.out.println("脫口罩");
+		}
 		
-		// 公用邏輯-後置通知
-		System.out.println("脫口罩");
 	}
 	
 	
