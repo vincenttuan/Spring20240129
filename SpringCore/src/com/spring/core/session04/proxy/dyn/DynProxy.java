@@ -28,8 +28,17 @@ public class DynProxy {
 			System.out.printf("Before:前置通知 log: 方法名稱:%s 方法參數:%s%n", 
 					method.getName(), Arrays.toString(args));
 			Object resultObj = null;
-			// 業務邏輯-調用
-			resultObj = method.invoke(object, args); // 第一的參數要放的是被代理對象的物件
+			
+			try {
+				// 業務邏輯-調用
+				resultObj = method.invoke(object, args); // 第一的參數要放的是被代理對象的物件
+			} finally {
+				// End:後置通知
+				System.out.printf("%s 結束", resultObj.getClass().getSimpleName());
+			}
+			
+			
+			
 			return resultObj;
 		};
 		
