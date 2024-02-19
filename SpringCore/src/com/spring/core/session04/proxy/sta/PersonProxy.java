@@ -11,7 +11,7 @@ public class PersonProxy implements Person {
 		this.person = person;
 	}
 	
-	@Override
+	//@Override
 	public void work() {
 		// 公用邏輯
 		System.out.println("戴口罩");

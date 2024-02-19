@@ -2,7 +2,7 @@ package com.spring.core.session04.proxy.sta;
 
 public class Man implements Person {
 
-	@Override
+	//@Override
 	public void work() {
 		// 公用邏輯
 		//System.out.println("戴口罩");
