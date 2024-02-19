@@ -32,9 +32,12 @@ public class DynProxy {
 			try {
 				// 業務邏輯-調用
 				resultObj = method.invoke(object, args); // 第一的參數要放的是被代理對象的物件
+			} catch (Exception e) {
+				// Exception:異常通知
+				System.out.printf("%s 發生異常 %s%n", object.getClass().getSimpleName(), e);
 			} finally {
 				// End:後置通知
-				System.out.printf("%s 結束", object.getClass().getSimpleName());
+				System.out.printf("%s 結束%n", object.getClass().getSimpleName());
 			}
 			
 			return resultObj;
