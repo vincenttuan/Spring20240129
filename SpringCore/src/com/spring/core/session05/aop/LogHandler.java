@@ -3,6 +3,7 @@ package com.spring.core.session05.aop;
 import java.util.Arrays;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -42,6 +43,13 @@ public class LogHandler {
 		String methodName = joinPoint.getSignature().getName(); // 取得連接點的方法名稱
 		Object[] args = joinPoint.getArgs(); // 取得方法參數
 		System.out.printf("前置通知: 名稱: %s 參數: %s%n", methodName, Arrays.toString(args));
+	}
+	
+	// 後置通知: Advice
+	@After(value = "ptAdd()")
+	public void endAdvice(JoinPoint joinPoint) {
+		String methodName = joinPoint.getSignature().getName(); // 取得連接點的方法名稱
+		System.out.printf("後置通知: 名稱: %s%n", methodName);
 	}
 	
 }
