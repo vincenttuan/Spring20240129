@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -50,6 +51,15 @@ public class LogHandler {
 	public void endAdvice(JoinPoint joinPoint) {
 		String methodName = joinPoint.getSignature().getName(); // 取得連接點的方法名稱
 		System.out.printf("後置通知: 名稱: %s%n", methodName);
+	}
+	
+	// 返回通知: Advice
+	// 可以透過 result 來接收到方法的回傳值
+	// 若有異常發生, 則返回通知不會執行
+	@AfterReturning(value = "ptAdd()", returning = "result")
+	public void afterReturningAdvice(JoinPoint joinPoint, Object result) { // 返回值得型態統一是 Object
+		String methodName = joinPoint.getSignature().getName(); // 取得連接點的方法名稱
+		System.out.printf("返回通知: 名稱: %s 返回值: %s%n", methodName, result);
 	}
 	
 }
