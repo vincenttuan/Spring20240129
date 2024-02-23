@@ -1,5 +1,7 @@
 package com.spring.core.session05.aop;
 
+import java.util.Arrays;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -12,9 +14,13 @@ import org.springframework.stereotype.Component;
 public class LogHandler {
 	
 	// 前置通知: Advice
-	@Before(value = "execution(public Integer com.spring.core.session05.aop.CalcImpl.add(Integer, Integer))")
+	//@Before(value = "execution(public Integer com.spring.core.session05.aop.CalcImpl.add(Integer, Integer))")
+	//@Before(value = "execution(public Integer com.spring.core.session05.aop.CalcImpl.mul(Integer, Integer))")
+	@Before(value = "execution(public Integer com.spring.core.session05.aop.CalcImpl.*(Integer, Integer))")
 	public void beforeAdvice(JoinPoint joinPoint) {
-		System.out.println("加法前置通知");
+		String methodName = joinPoint.getSignature().getName(); // 取得連接點的方法名稱
+		Object[] args = joinPoint.getArgs(); // 取得方法參數
+		System.out.printf("前置通知: 名稱: %s 參數: %s%n", methodName, Arrays.toString(args));
 	}
 	
 }
