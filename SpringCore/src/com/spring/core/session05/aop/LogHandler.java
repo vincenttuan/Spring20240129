@@ -17,7 +17,9 @@ public class LogHandler {
 	//@Before(value = "execution(public Integer com.spring.core.session05.aop.CalcImpl.add(Integer, Integer))")
 	//@Before(value = "execution(public Integer com.spring.core.session05.aop.CalcImpl.mul(Integer, Integer))")
 	//@Before(value = "execution(public Integer com.spring.core.session05.aop.CalcImpl.*(Integer, Integer))") // 忽略方法名
-	@Before(value = "execution(public Integer com.spring.core.session05.aop.CalcImpl.*(..))") // 忽略方法名與參數
+	//@Before(value = "execution(public Integer com.spring.core.session05.aop.CalcImpl.*(..))") // 忽略方法名與參數
+	//@Before(value = "execution(public Integer com.spring.core.session05.aop.*.*(..))") // 忽略類別, 忽略方法名與參數
+	@Before(value = "execution(* com.spring.core.session05.aop.*.*(..))") // 忽略權限+回傳值, 忽略類別, 忽略方法名與參數
 	public void beforeAdvice(JoinPoint joinPoint) {
 		String methodName = joinPoint.getSignature().getName(); // 取得連接點的方法名稱
 		Object[] args = joinPoint.getArgs(); // 取得方法參數
