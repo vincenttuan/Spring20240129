@@ -15,6 +15,7 @@ public class AOPTest {
 		System.out.println(calc.sub(20, 10));
 		System.out.println(calc.mul(20, 10));
 		System.out.println(calc.div(20, 10));
+		System.out.println(calc.div(20, 0));
 		
 	}
 
