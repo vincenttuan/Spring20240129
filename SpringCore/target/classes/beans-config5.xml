@@ -11,7 +11,12 @@
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 	   http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 	
-	    
+	<!-- 讓 spring 自動掃描有 @ 的資源 -->
+	<context:component-scan base-package="com.spring.core.session05" />
+	
+	<!-- 讓  Spring AOP 切面自動代理 -->
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	
 </beans>       
 
 
