@@ -16,7 +16,8 @@ public class LogHandler {
 	// 前置通知: Advice
 	//@Before(value = "execution(public Integer com.spring.core.session05.aop.CalcImpl.add(Integer, Integer))")
 	//@Before(value = "execution(public Integer com.spring.core.session05.aop.CalcImpl.mul(Integer, Integer))")
-	@Before(value = "execution(public Integer com.spring.core.session05.aop.CalcImpl.*(Integer, Integer))")
+	//@Before(value = "execution(public Integer com.spring.core.session05.aop.CalcImpl.*(Integer, Integer))") // 忽略方法名
+	@Before(value = "execution(public Integer com.spring.core.session05.aop.CalcImpl.*(..))") // 忽略方法名與參數
 	public void beforeAdvice(JoinPoint joinPoint) {
 		String methodName = joinPoint.getSignature().getName(); // 取得連接點的方法名稱
 		Object[] args = joinPoint.getArgs(); // 取得方法參數
