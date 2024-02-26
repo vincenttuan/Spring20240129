@@ -24,7 +24,13 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public Employee getEmployeeById(Integer id) {
-		// TODO Auto-generated method stub
+		String sql = "select id, name, salary, createtime from employee where id=?";
+		try {
+			Employee employee = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Employee.class), id);
+			return employee;
+		} catch (Exception e) {
+			System.out.println("查無資料");
+		}
 		return null;
 	}
 
