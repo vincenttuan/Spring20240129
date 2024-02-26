@@ -24,14 +24,19 @@
 	
 	<!-- 讓 Spring AOP 切面自動代理 -->
 	<aop:aspectj-autoproxy proxy-target-class="true" />
+	
 	<!-- load db.properties -->
 	<context:property-placeholder location="db.properties" />
+	
 	<!-- c3p0 pool -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="${jdbc.driver}" />
 		<property name="jdbcUrl" value="${jdbc.url}" />
 		<property name="user" value="${jdbc.username}" />
 		<property name="password" value="${jdbc.password}" />
+		<property name="initialPoolSize" value="5" /> <!-- 初始連線數  -->
+		<property name="maxPoolSize" value="20" /> <!-- 最大連線數  -->
+		<property name="acquireIncrement" value="3" /> <!-- 當連接池中的連接不足時, 一次性增加的連接數 -->
 		<property name="maxConnectionAge" value="300" /> <!-- -1 表示沒有限制 -->
 		<property name="maxIdleTimeExcessConnections" value="50" /> <!-- -1 表示沒有限制 -->
 		<property name="debugUnreturnedConnectionStackTraces" value="true" />
