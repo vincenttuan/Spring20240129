@@ -51,8 +51,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public Employee findEmployeeMinSalary() {
-		// TODO Auto-generated method stub
-		return null;
+		return findAll().stream().min(Comparator.comparingInt(Employee::getSalary)).orElse(null);
 	}
 	
 }
