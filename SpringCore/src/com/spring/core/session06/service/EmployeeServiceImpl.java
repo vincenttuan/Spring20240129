@@ -1,6 +1,7 @@
 package com.spring.core.session06.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,8 +27,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public Employee findEmployeeByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Employee> employees = findAll();
+		Optional<Employee> employeeOpt = employees.stream().filter(emp -> emp.getName().equals(name)).findFirst();
+		return employeeOpt.isPresent() ? employeeOpt.get() : null;
 	}
 
 	@Override
