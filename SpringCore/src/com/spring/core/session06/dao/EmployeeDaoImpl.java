@@ -43,8 +43,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public Double getAvgSalary() {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "select AVG(salary) from employee";
+		Double avg = jdbcTemplate.queryForObject(sql, Double.class);
+		return avg;
 	}
 
 	@Override
