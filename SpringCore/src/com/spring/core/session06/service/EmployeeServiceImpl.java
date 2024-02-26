@@ -13,6 +13,10 @@ import com.spring.core.session06.model.po.Employee;
 public class EmployeeServiceImpl implements EmployeeService {
 	
 	@Autowired
+	// 會自動去尋找 EmployeeDao 的實作類
+	// 在這邊就會自動找到 EmployeeDaoImpl
+	// 相當於 private EmployeeDao employeeDao = new EmployeeDaoImpl();
+	// 限制在 EmployeeDao 只有一個實作類的情況下 
 	private EmployeeDao employeeDao;
 	
 	@Override
