@@ -1,5 +1,6 @@
 package com.spring.core.session06.service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,9 +40,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public Employee findEmployeeMaxSalary() {
 		List<Employee> employees = findAll();
+		/*
 		Integer maxSalary = employees.stream().mapToInt(Employee::getSalary).max().getAsInt();
 		Optional<Employee> employeeOpt = employees.stream().filter(emp -> emp.getSalary().equals(maxSalary)).findFirst();
 		return employeeOpt.isPresent() ? employeeOpt.get() : null;
+		*/
+		Employee employee = employees.stream().max(Comparator.comparingInt(Employee::getSalary)).orElse(null);
+		return employee;
 	}
 
 	@Override
