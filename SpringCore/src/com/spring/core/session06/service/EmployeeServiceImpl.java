@@ -1,0 +1,45 @@
+package com.spring.core.session06.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.spring.core.session06.dao.EmployeeDao;
+import com.spring.core.session06.model.po.Employee;
+
+@Service
+public class EmployeeServiceImpl implements EmployeeService {
+	
+	@Autowired
+	private EmployeeDao employeeDao;
+	
+	@Override
+	public List<Employee> findAll() {
+		return employeeDao.queryEmployees();
+	}
+
+	@Override
+	public Employee findEmployeeById(Integer id) {
+		return employeeDao.getEmployeeById(id);
+	}
+
+	@Override
+	public Employee findEmployeeByName(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Employee findEmployeeMaxSalary() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Employee findEmployeeMinSalary() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+}
