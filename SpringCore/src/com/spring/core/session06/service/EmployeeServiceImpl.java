@@ -34,8 +34,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public Employee findEmployeeMaxSalary() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Employee> employees = findAll();
+		Integer maxSalary = employees.stream().mapToInt(Employee::getSalary).max().getAsInt();
+		Optional<Employee> employeeOpt = employees.stream().filter(emp -> emp.getSalary().equals(maxSalary)).findFirst();
+		return employeeOpt.isPresent() ? employeeOpt.get() : null;
 	}
 
 	@Override
