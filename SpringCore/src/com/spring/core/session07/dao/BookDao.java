@@ -8,6 +8,4 @@ public interface BookDao {
 	// 交易服務-更新
 	Integer reduceBookStock(Integer bookId, Integer amountToReduce); // 更新書本庫存(減量)
 	Integer reduceWalletBalance(String username, Integer bookPrice); // 更新錢包餘額(減量)
-	
-	
 }
