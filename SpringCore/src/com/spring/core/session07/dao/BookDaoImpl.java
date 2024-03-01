@@ -11,15 +11,15 @@ public class BookDaoImpl implements BookDao {
 	private JdbcTemplate jdbcTemplate;
 	
 	@Override
-	public Integer getBookPrice(Integer bookId) {
+	public Integer getBookPrice(Integer bookId) { // 取得書本價格
 		String sql = "select book_price from book where book_id = ?";
 		return jdbcTemplate.queryForObject(sql, Integer.class, bookId);
 	}
 
 	@Override
-	public Integer getBookStock(Integer bookId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Integer getBookStock(Integer bookId) { // 取得書本庫存
+		String sql = "select book_amount from stock book_id = ?";
+		return jdbcTemplate.queryForObject(sql, Integer.class, bookId);
 	}
 
 	@Override
