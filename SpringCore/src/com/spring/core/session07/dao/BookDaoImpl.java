@@ -18,7 +18,7 @@ public class BookDaoImpl implements BookDao {
 
 	@Override
 	public Integer getBookStock(Integer bookId) { // 取得書本庫存
-		String sql = "select book_amount from stock book_id = ?";
+		String sql = "select book_amount from stock where book_id = ?";
 		return jdbcTemplate.queryForObject(sql, Integer.class, bookId);
 	}
 
