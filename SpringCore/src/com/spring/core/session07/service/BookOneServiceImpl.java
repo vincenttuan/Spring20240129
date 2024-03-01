@@ -2,6 +2,7 @@ package com.spring.core.session07.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.core.session07.dao.BookDao;
 
@@ -12,6 +13,7 @@ public class BookOneServiceImpl implements BookOneService {
 	private BookDao bookDao;
 	
 	@Override
+	@Transactional
 	public void buyOne(String username, Integer bookId) {
 		// 1. 查詢書本價格
 		Integer bookPrice = bookDao.getBookPrice(bookId);
