@@ -10,7 +10,7 @@ public class BookTest1 {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("jdbc-config.xml");
 		BookOneService bookOneService = ctx.getBean(BookOneService.class);
 		// 買單本書
-		bookOneService.buyOne("Mary", 1);
+		bookOneService.buyOne("john", 1);
 		System.out.println("買單本書 OK");
 	}
 }
