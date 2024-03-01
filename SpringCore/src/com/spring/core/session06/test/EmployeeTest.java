@@ -15,7 +15,7 @@ public class EmployeeTest {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("jdbc-config.xml");
 		
 		//EmployeeService employeeService = ctx.getBean(EmployeeService.class);
-		
+		//EmployeeService employeeService = ctx.getBean("myEmployeeService", EmployeeServiceImpl.class);
 		EmployeeService employeeService = ctx.getBean("employeeServiceImpl", EmployeeServiceImpl.class);
 		
 		List<Employee> employees = employeeService.findAll();

@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service;
 import com.spring.core.session06.dao.EmployeeDao;
 import com.spring.core.session06.model.po.Employee;
 
-@Service
+//@Service("myEmployeeService")
+@Service // 預設 employeeServiceImpl
 public class EmployeeServiceImpl implements EmployeeService {
 	
 	@Autowired
