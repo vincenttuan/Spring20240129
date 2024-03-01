@@ -9,7 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import com.spring.core.session06.model.po.Employee;
 
-@Repository
+@Repository("myEmployeeDao") // 自訂名稱
+//@Repository // 預設 "employeeDaoImpl"
 public class EmployeeDaoImpl implements EmployeeDao {
 	
 	@Autowired
