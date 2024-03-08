@@ -1,5 +1,8 @@
 package com.example.demo.model.dto;
 
+// jdk 21: 記錄類
+public record BmiDto(Double height, Double weight, Double bmiValue, String bmiResult) {}
+/*
 public class BmiDto {
 	private final Double height;
 	private final Double weight;
@@ -30,3 +33,4 @@ public class BmiDto {
 	}
 	
 }
+*/
