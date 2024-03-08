@@ -7,6 +7,6 @@
 <title>Hello JSP</title>
 </head>
 <body>
-	Hello JSP ${ name } $ { time }
+	Hello JSP ${ name } ${ time }
 </body>
 </html>
