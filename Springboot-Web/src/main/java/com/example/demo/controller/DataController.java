@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.model.dto.BmiDto;
 import com.example.demo.model.response.ApiResponse;
 
 @RestController
@@ -47,4 +48,13 @@ public class DataController {
 	// 可以回應身高,體重,bmi與result
 	// bmi <= 18 : 過輕, bmi > 23 : 過重, 其餘正常
 	// 提示: 嘗試建立一個 BMI 的 DTO 物件來封裝資料訊息
+	@GetMapping("/bmi")
+	public ResponseEntity<ApiResponse<BmiDto>> calcBmi(@RequestParam("h") Double height, @RequestParam("w") Double weight) {
+		Double bmiValue = weight / Math.pow(height/100.0, 2);
+		String bmiResult = bmiValue <= 18 ? "過輕" : bmiValue > 23 ? "過重" : "正常";
+		BmiDto bmiDto = new BmiDto(height, weight, bmiValue, bmiResult);
+		ApiResponse<BmiDto> apiResponse = new ApiResponse<>(true, "成功", bmiDto);
+		return ResponseEntity.ok(apiResponse);
+	}
+	
 }
