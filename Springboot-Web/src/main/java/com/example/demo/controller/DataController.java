@@ -43,4 +43,8 @@ public class DataController {
 		return ResponseEntity.ok(apiResponse);
 	}
 	
+	// http://localhost:8080/data/bmi?h=170&w=60
+	// 可以回應身高,體重,bmi與result
+	// bmi <= 18 : 過輕, bmi > 23 : 過重, 其餘正常
+	// 提示: 嘗試建立一個 BMI 的 DTO 物件來封裝資料訊息
 }
