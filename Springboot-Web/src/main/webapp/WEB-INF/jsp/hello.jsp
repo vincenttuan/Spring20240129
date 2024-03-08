@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Hello JSP</title>
 </head>
 <body>
-
+	Hello JSP ${ name } $ { time }
 </body>
 </html>
