@@ -31,15 +31,19 @@ public class DataController {
 	}
 	
 	@GetMapping("/pass")
-	public ResponseEntity<ApiResponse<Integer>> pass(@RequestParam("score") Integer score) {
+	public ResponseEntity<ApiResponse<Integer>> pass(@RequestParam(value = "score", defaultValue = "-1") Integer score) {
 		ApiResponse<Integer> apiResponse = new ApiResponse<>();
+		
 		apiResponse.setData(score);
 		if(score >= 60) {
 			apiResponse.setStatus(true);
 			apiResponse.setMessage("及格");
+		} else if (score >= 0) {
+			apiResponse.setStatus(true);
+			apiResponse.setMessage("不及格");
 		} else {
 			apiResponse.setStatus(false);
-			apiResponse.setMessage("不及格");
+			apiResponse.setMessage("請輸入分數");
 		}
 		return ResponseEntity.ok(apiResponse);
 	}
