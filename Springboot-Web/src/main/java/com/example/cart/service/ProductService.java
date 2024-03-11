@@ -36,19 +36,28 @@ public class ProductService {
 		return modelMapper.map(product, ProductDto.class);
 	}
 	
-	public ProductDto addProduct(Product product) {
+	public ProductDto addProduct(ProductDto productDto) {
 		// 檢查 product 的資料 ...
 		// 略...
+		// DTO 轉 PO
+		Product product = modelMapper.map(productDto, Product.class);
+		// 儲存
 		Product savedProduct = productDao.addProduct(product);
+		// PO 轉 DTO
 		return modelMapper.map(savedProduct, ProductDto.class);
 	}
 	
-	public ProductDto updateProduct(Integer id, Product product) {
+	public ProductDto updateProduct(Integer id, ProductDto productDto) {
 		if(id == null) {
 			return null;
 		}
+		// DTO 轉 PO
+		Product product = modelMapper.map(productDto, Product.class);
+		// 設定 id
 		product.setId(id);
+		// 修改 
 		Product updatedProduct = productDao.updateProduct(product);
+		// PO 轉 DTO
 		return modelMapper.map(updatedProduct, ProductDto.class);
 	}
 	
