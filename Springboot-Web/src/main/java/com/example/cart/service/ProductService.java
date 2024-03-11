@@ -2,6 +2,7 @@ package com.example.cart.service;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -16,10 +17,15 @@ public class ProductService {
 	@Qualifier("InMemory")
 	private ProductDao productDao;
 	
+	@Autowired
+	private ModelMapper modelMapper;
+	
 	public List<ProductDto> queryAllProducts() {
 		List<Product> products = productDao.queryAllProducts();
 		// PO 轉 DTO
-		
+		return products.stream()
+				.map(product -> modelMapper.map(product, ProductDto.class))
+				.toList();
 	}
 	
 	public Product getProductById(Integer id) {
