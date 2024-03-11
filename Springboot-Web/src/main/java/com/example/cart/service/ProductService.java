@@ -67,6 +67,6 @@ public class ProductService {
 	}
 	
 	public Boolean deleteProductById(Integer id) {
-		return id == null ? false : deleteProductById(id);
+		return id == null ? false : productDao.deleteProductById(id);
 	}
 }
