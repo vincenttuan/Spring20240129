@@ -10,7 +10,13 @@ import com.example.cart.model.po.Product;
 @Repository("InMemory")
 public class ProductDaoInMemory implements ProductDao {
 	private static List<Product> products = new CopyOnWriteArrayList<>();
-
+	
+	static {
+		products.add(new Product(1, "西瓜", 100, 200, 10));
+		products.add(new Product(2, "烤腸", 12, 45, 15));
+		products.add(new Product(3, "肉圓", 15, 60, 25));
+	}
+	
 	@Override
 	public List<Product> queryAllProducts() {
 		return products;
