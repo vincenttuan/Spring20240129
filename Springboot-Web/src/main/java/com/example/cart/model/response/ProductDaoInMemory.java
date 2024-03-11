@@ -48,26 +48,35 @@ public class ProductDaoInMemory implements ProductDao {
 
 	@Override
 	public Product updateProductQty(Integer id, Integer qty) {
-		// TODO Auto-generated method stub
-		return null;
+		// 先取得要修改的 product 物件
+		Product updateProduct = getProductById(id);
+		if(updateProduct == null) {
+			return null;
+		}
+		updateProduct.setQty(qty);
+		return updateProduct;
 	}
 
 	@Override
 	public Product addProductQty(Integer id, Integer increment) {
-		// TODO Auto-generated method stub
-		return null;
+		// 先取得要修改的 product 物件
+		Product updateProduct = getProductById(id);
+		if(updateProduct == null) {
+			return null;
+		}
+		Integer lastQty = updateProduct.getQty() + increment;
+		updateProduct.setQty(lastQty);
+		return updateProduct;
 	}
 
 	@Override
 	public Product reduceProductQty(Integer id, Integer decrement) {
-		// TODO Auto-generated method stub
-		return null;
+		return addProductQty(id, decrement * -1);
 	}
 
 	@Override
 	public Boolean deleteProductById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return products.remove(getProductById(id));
 	}
 	
 	
