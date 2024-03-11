@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.example.cart.model.dto.ProductDto;
 import com.example.cart.model.po.Product;
 import com.example.cart.repository.ProductDao;
 
@@ -15,8 +16,10 @@ public class ProductService {
 	@Qualifier("InMemory")
 	private ProductDao productDao;
 	
-	public List<Product> queryAllProducts() {
-		return productDao.queryAllProducts();
+	public List<ProductDto> queryAllProducts() {
+		List<Product> products = productDao.queryAllProducts();
+		// PO 轉 DTO
+		
 	}
 	
 	public Product getProductById(Integer id) {
