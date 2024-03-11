@@ -1,4 +1,4 @@
-package com.example.cart.model.response;
+package com.example.cart.repository;
 
 import java.util.List;
 
