@@ -28,51 +28,57 @@ public class ProductService {
 				.toList();
 	}
 	
-	public Product getProductById(Integer id) {
+	public ProductDto getProductById(Integer id) {
 		if(id == null) {
 			return null;
 		}
-		return productDao.getProductById(id);
+		Product product = productDao.getProductById(id);
+		return modelMapper.map(product, ProductDto.class);
 	}
 	
-	public Product addProduct(Product product) {
+	public ProductDto addProduct(Product product) {
 		// 檢查 product 的資料 ...
 		// 略...
-		return productDao.addProduct(product);
+		Product savedProduct = productDao.addProduct(product);
+		return modelMapper.map(savedProduct, ProductDto.class);
 	}
 	
-	public Product updateProduct(Integer id, Product product) {
+	public ProductDto updateProduct(Integer id, Product product) {
 		if(id == null) {
 			return null;
 		}
 		product.setId(id);
-		return productDao.updateProduct(product);
+		Product updatedProduct = productDao.updateProduct(product);
+		return modelMapper.map(updatedProduct, ProductDto.class);
 	}
 	
-	public Product updateProductQty(Integer id, Integer qty) { // 修改庫存(庫存覆蓋)
+	public ProductDto updateProductQty(Integer id, Integer qty) { // 修改庫存(庫存覆蓋)
 		if(id == null || qty == null || qty < 0) {
 			return null;
 		}
-		return productDao.updateProductQty(id, qty);
+		Product updatedProduct = productDao.updateProductQty(id, qty);
+		return modelMapper.map(updatedProduct, ProductDto.class);
 	}
 	
-	public Product addProductQty(Integer id, Integer increment) { // 增量庫存
+	public ProductDto addProductQty(Integer id, Integer increment) { // 增量庫存
 		if(id == null || increment == null || increment < 0) {
 			return null;
 		}
-		return productDao.addProductQty(id, increment);
+		Product updatedProduct = productDao.addProductQty(id, increment);
+		return modelMapper.map(updatedProduct, ProductDto.class);
 	}
 	
-	public Product reduceProductQty(Integer id, Integer decrement) { // 減量庫存
+	public ProductDto reduceProductQty(Integer id, Integer decrement) { // 減量庫存
 		if(id == null || decrement == null || decrement < 0) {
 			return null;
 		}
 		// 減量後庫存不可 < 0
-		Product product = getProductById(id);
+		Product product = productDao.getProductById(id);
 		if(product.getQty() - decrement < 0) {
 			return null;
 		}
-		return productDao.reduceProductQty(id, decrement);
+		Product updatedProduct = productDao.reduceProductQty(id, decrement);
+		return modelMapper.map(updatedProduct, ProductDto.class);
 	}
 	
 	public Boolean deleteProductById(Integer id) {
