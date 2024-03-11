@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.cart.model.dto.ProductDto;
@@ -28,4 +29,15 @@ public class ProductController {
 		return ResponseEntity.ok(apiResponse);
 	}
 	
+	@GetMapping("/{id}")
+	public ResponseEntity<ApiResponse<ProductDto>> getProduct(@PathVariable("id") Integer id) {
+		ProductDto productDto = productService.getProductById(id);
+		ApiResponse<ProductDto> apiResponse = null;
+		if (productDto == null) {
+			apiResponse = new ApiResponse<>(false, "查無資料", null);
+		} else {
+			apiResponse = new ApiResponse<>(true, "成功", productDto);
+		}
+		return ResponseEntity.ok(apiResponse);
+	}
 }
