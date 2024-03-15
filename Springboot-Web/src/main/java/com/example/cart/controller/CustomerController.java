@@ -62,7 +62,7 @@ public class CustomerController {
 	
 	@DeleteMapping("/{customerId}")
 	public ResponseEntity<ApiResponse<Boolean>> deleteProduct(@PathVariable("customerId") Integer customerId) {
-		Boolean status = customerService.deleteCustomer(customerId);
+		Boolean status = customerService.deleteCustomerById(customerId);
 		ApiResponse<Boolean> apiResponse = new ApiResponse<>(status, 
 				status ? StatusMessage.刪除成功.name() : StatusMessage.刪除失敗.name(), 
 				status);

@@ -48,7 +48,7 @@ public class CustomerService {
 		return modelMapper.map(updatedCustomer, CustomerDto.class);
 	}
 	
-	public Boolean deleteCustomer(Integer id) {
+	public Boolean deleteCustomerById(Integer id) {
 		return customerDao.deleteCustomerById(id);
 	}
 	
