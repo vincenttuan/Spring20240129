@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -50,4 +51,14 @@ public class ProductController {
 		ApiResponse<ProductDto> apiResponse = new ApiResponse<>(true, StatusMessage.新增成功.name(), savedProductDto);
 		return ResponseEntity.ok(apiResponse);
 	}
+	
+	@PutMapping("/{productId}")
+	public ResponseEntity<ApiResponse<ProductDto>> updateProduct(@PathVariable("productId") Integer productId,
+																 ProductDto productDto) {
+		ProductDto updatedProductDto = productService.updateProduct(productId, productDto);
+		ApiResponse<ProductDto> apiResponse = new ApiResponse<>(true, StatusMessage.修改成功.name(), updatedProductDto);
+		return ResponseEntity.ok(apiResponse);
+	}
+	
+	
 }
