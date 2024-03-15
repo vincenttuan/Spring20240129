@@ -90,7 +90,7 @@ public class ProductController {
 	@DeleteMapping("/{productId}")
 	public ResponseEntity<ApiResponse<Boolean>> deleteProduct(@PathVariable("productId") Integer productId) {
 		Boolean status = productService.deleteProductById(productId);
-		ApiResponse<Boolean> apiResponse = new ApiResponse<>(true, 
+		ApiResponse<Boolean> apiResponse = new ApiResponse<>(status, 
 				status ? StatusMessage.刪除成功.name() : StatusMessage.刪除失敗.name(), 
 				status);
 		return ResponseEntity.ok(apiResponse);
