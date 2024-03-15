@@ -52,8 +52,7 @@ public class CustomerDaoInMemory implements CustomerDao {
 
 	@Override
 	public Boolean deleteCustomerById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return customers.removeIf(customer -> customer.getId().equals(id));
 	}
 	
 }
