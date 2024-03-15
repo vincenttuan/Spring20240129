@@ -5,8 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.cart.model.dto.CustomerDto;
@@ -38,6 +42,30 @@ public class CustomerController {
 		} else {
 			apiResponse = new ApiResponse<>(true, StatusMessage.成功.name(), customerDto);
 		}
+		return ResponseEntity.ok(apiResponse);
+	}
+	
+	@PostMapping
+	public ResponseEntity<ApiResponse<CustomerDto>> addProduct(@RequestBody CustomerDto customerDto) {
+		CustomerDto savedCustomerDto = customerService.addCustomer(customerDto);
+		ApiResponse<CustomerDto> apiResponse = new ApiResponse<>(true, StatusMessage.新增成功.name(), savedCustomerDto);
+		return ResponseEntity.ok(apiResponse);
+	}
+	
+	@PutMapping("/{customerId}")
+	public ResponseEntity<ApiResponse<CustomerDto>> updateProduct(@PathVariable("customerId") Integer customerId,
+																 @RequestBody CustomerDto customerDto) {
+		CustomerDto updatedCustomerDto = customerService.updateCustomer(customerId, customerDto);
+		ApiResponse<CustomerDto> apiResponse = new ApiResponse<>(true, StatusMessage.修改成功.name(), updatedCustomerDto);
+		return ResponseEntity.ok(apiResponse);
+	}
+	
+	@DeleteMapping("/{customerId}")
+	public ResponseEntity<ApiResponse<Boolean>> deleteProduct(@PathVariable("customerId") Integer customerId) {
+		Boolean status = customerService.deleteCustomer(customerId);
+		ApiResponse<Boolean> apiResponse = new ApiResponse<>(status, 
+				status ? StatusMessage.刪除成功.name() : StatusMessage.刪除失敗.name(), 
+				status);
 		return ResponseEntity.ok(apiResponse);
 	}
 	
