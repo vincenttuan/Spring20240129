@@ -32,14 +32,22 @@ public class CustomerDaoInMemory implements CustomerDao {
 
 	@Override
 	public Customer addCustomer(Customer customer) {
-		// TODO Auto-generated method stub
-		return null;
+		// 得到 maxId
+		int maxId = customers.stream().mapToInt(Customer::getId).max().orElse(0);
+		customer.setId(maxId + 1);
+		customers.add(customer);
+		return customer;
 	}
 
 	@Override
 	public Customer updateCustomer(Customer customer) {
-		// TODO Auto-generated method stub
-		return null;
+		Customer updateCustomer = getCustomerById(customer.getId());
+		if(updateCustomer == null) {
+			return null;
+		}
+		updateCustomer.setUsername(customer.getUsername());
+		updateCustomer.setPassword(customer.getPassword());
+		return customer;
 	}
 
 	@Override
