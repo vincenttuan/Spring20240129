@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -54,9 +55,34 @@ public class ProductController {
 	
 	@PutMapping("/{productId}")
 	public ResponseEntity<ApiResponse<ProductDto>> updateProduct(@PathVariable("productId") Integer productId,
-																 ProductDto productDto) {
+																 @RequestBody ProductDto productDto) {
 		ProductDto updatedProductDto = productService.updateProduct(productId, productDto);
 		ApiResponse<ProductDto> apiResponse = new ApiResponse<>(true, StatusMessage.修改成功.name(), updatedProductDto);
+		return ResponseEntity.ok(apiResponse);
+	}
+	
+	// 部分更新
+	// 例如: /1/qty/add
+	// 例如: /2/qty/update
+	@PatchMapping("/{productId}/qty/{actionName}")
+	public ResponseEntity<ApiResponse<ProductDto>> patchProduct(@PathVariable("productId") Integer productId,
+																@PathVariable("actionName") String actionName,
+			 													@RequestBody ProductDto productDto) {
+		ProductDto updateProductDto = null;
+		Integer qty = productDto.getQty();
+		switch (actionName) {
+			case "add":
+				updateProductDto = productService.addProductQty(productId, qty);
+				break;
+			case "update":
+				updateProductDto = productService.updateProductQty(productId, qty);
+				break;	
+			default:
+		}
+		
+		ApiResponse<ProductDto> apiResponse = new ApiResponse<>(true, 
+				updateProductDto == null ? StatusMessage.修改數量失敗.name() : StatusMessage.修改數量成功.name(), 
+				updateProductDto);
 		return ResponseEntity.ok(apiResponse);
 	}
 	
