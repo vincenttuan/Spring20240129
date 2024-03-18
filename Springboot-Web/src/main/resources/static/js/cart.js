@@ -2,7 +2,12 @@
 const fetchUsername = async() => {
 	const response = await fetch('http://localhost:8080/user/name');
 	if(response.ok) {
-		console.log(response.json);	
+		const {data, status, message} = await response.json();
+		console.log(data);
+		console.log(typeof(data));
+		
+		console.log(status);
+		console.log(message);
 	}
 };
 
