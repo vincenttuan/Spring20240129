@@ -10,10 +10,10 @@ import com.example.cart.model.response.StatusMessage;
 import com.example.demo.model.response.ApiResponse;
 
 @Controller
-@RequestMapping("/username")
+@RequestMapping("/user")
 public class UserController {
 	
-	@GetMapping
+	@GetMapping("/name")
 	public ResponseEntity<ApiResponse<String>> getLoginUsername(Principal principal) {
 		String username = principal.getName(); // 取得登入者的名字
 		ApiResponse<String> apiResponse = new ApiResponse<>(true, StatusMessage.成功.name(), username);
