@@ -15,7 +15,7 @@ public class UserController {
 	
 	@GetMapping("/name")
 	public ResponseEntity<ApiResponse<String>> getLoginUsername(Principal principal) {
-		String username = principal.getName(); // 取得登入者的名字
+		String username = String.format("{'username': '%s'}", principal.getName()); // 取得登入者的名字
 		ApiResponse<String> apiResponse = new ApiResponse<>(true, StatusMessage.成功.name(), username);
 		return ResponseEntity.ok(apiResponse);
 	}
