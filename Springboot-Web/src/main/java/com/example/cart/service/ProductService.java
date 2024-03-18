@@ -14,7 +14,7 @@ import com.example.cart.repository.ProductDao;
 @Service
 public class ProductService {
 	@Autowired
-	@Qualifier("InMemory")
+	@Qualifier("InMemoryProduct")
 	private ProductDao productDao;
 	
 	@Autowired

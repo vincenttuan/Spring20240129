@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.example.cart.model.po.Customer;
 import com.example.cart.model.po.Product;
 
-@Repository("InMemory")
+@Repository("InMemoryCustomer")
 public class CustomerDaoInMemory implements CustomerDao {
 	
 	private static List<Customer> customers = new CopyOnWriteArrayList<>();
