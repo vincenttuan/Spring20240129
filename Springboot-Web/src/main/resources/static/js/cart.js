@@ -5,9 +5,12 @@ const fetchUsername = async() => {
 		const {data, status, message} = await response.json();
 		console.log(data);
 		console.log(typeof(data));
-		
+		console.log(JSON.parse(data));
+		console.log(JSON.parse(data).username);
 		console.log(status);
 		console.log(message);
+		
+		document.getElementById("username").innerHTML = JSON.parse(data).username;
 	}
 };
 
