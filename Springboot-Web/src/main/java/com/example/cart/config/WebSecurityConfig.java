@@ -37,10 +37,18 @@ public class WebSecurityConfig {
 			UserDetails user = User.builder()
 					.username(customer.getUsername())
 					.password(encoder.encode(customer.getPassword())) // 加密
-					.roles("USER")
+					.roles("USER") // 角色:一般使用者 
 					.build();
-			users.add(user);
+			users.add(user); // 加入到集合
 		});
+		
+		// 另外增加一個 user
+		UserDetails admin = User.builder()
+				.username("admin")
+				.password(encoder.encode("1234"))
+				.roles("ADMIN") // 角色:管理者
+				.build();
+		users.add(admin); // 加入到集合
 		
 		return new InMemoryUserDetailsManager(users);
 	}
