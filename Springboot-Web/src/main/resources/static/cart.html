@@ -6,11 +6,29 @@
 		<script src="./js/cart.js"></script>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" />
 	</head>
-	<body>
+	<body style="padding: 20px">
 		<span id="username"></span>
 		的購物資料
 		<div id="logout" class="pure-button">登出</div>
 		<p />
+		<table>
+			<tr>
+				<td valign="top">
+					<!-- 商品列表 -->
+					<div id="products-container"></div>
+				</td>
+				<td valign="top">
+					<!-- 訂單列表 -->
+					<div id="orders-container"></div>
+				</td>
+			</tr>
+			<tr>
+				<td valign="top">
+					<!-- 客戶列表 -->
+					<div id="customers-container"></div>
+				</td>
+			</tr>
+		</table>
 		
 	</body>
 </html>
