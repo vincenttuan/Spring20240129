@@ -1,5 +1,6 @@
 package com.example.cart.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,13 @@ public class CustomerController {
 	
 	@Autowired
 	private CustomerService customerService;
+	
+	@GetMapping("/username")
+	public ResponseEntity<ApiResponse<String>> getLoginUsername(Principal principal) {
+		String username = principal.getName();
+		ApiResponse<String> apiResponse = new ApiResponse<>(true, StatusMessage.成功.name(), username);
+		return ResponseEntity.ok(apiResponse);
+	}
 	
 	@GetMapping
 	public ResponseEntity<ApiResponse<List<CustomerDto>>> queryAllCustomers() {
