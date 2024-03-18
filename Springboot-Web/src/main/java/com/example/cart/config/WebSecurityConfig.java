@@ -36,7 +36,8 @@ public class WebSecurityConfig {
 				.anyRequest().authenticated())
 				//.httpBasic();
 				.formLogin(Customizer.withDefaults())  // 預設表單登入頁面
-				.csrf(csrf -> csrf.disable()); // 關閉 CSRF(跨站請求偽造) 保護 
+				.csrf(csrf -> csrf.disable()) // 關閉 CSRF(跨站請求偽造) 保護 
+				.cors(Customizer.withDefaults()); // 預設: 啟用 CORS (跨域資源共享)  
 		
 		return http.build(); // 建立安全過濾器鏈
 	}
