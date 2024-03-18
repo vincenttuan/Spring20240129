@@ -6,6 +6,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -28,7 +29,10 @@ public class WebSecurityConfig {
 	// 安全過濾配置
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		
+		http.authorizeHttpRequests((authz) -> authz
+				.anyRequest().authenticated())
+				//.httpBasic();
+				.formLogin(Customizer.withDefaults()); // 預設表單登入頁面
 		
 		return http.build(); // 建立安全過濾器鏈
 	}
