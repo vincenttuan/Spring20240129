@@ -14,7 +14,12 @@ const fetchUsername = async() => {
 	}
 };
 
+const logout = () => window.location.href = '/logout';
+
 // 等待 DOM 加載完畢後再執行
 document.addEventListener("DOMContentLoaded", async() => {
+	document.getElementById("logout").addEventListener("click", logout);
+	
 	fetchUsername(); // 取得 username
+	
 });
