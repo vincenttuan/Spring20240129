@@ -39,7 +39,7 @@ public class CustomerController {
 		List<CustomerDto> customerDtos = customerService.findAllCustomers();
 		ApiResponse<List<CustomerDto>> apiResponse = new ApiResponse<>(true, StatusMessage.成功.name(), customerDtos);
 		return ResponseEntity.ok(apiResponse);
-	} 
+	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<ApiResponse<CustomerDto>> getCustomer(@PathVariable("id") Integer id) {
