@@ -30,6 +30,9 @@ public class WebSecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests((authz) -> authz
+				.requestMatchers("/css/**", "/js/**", "/image/**").permitAll()
+				.requestMatchers("/customers/**").hasRole("ADMIN")
+				.requestMatchers("/products/**").hasAnyRole("USER", "ADMIN")
 				.anyRequest().authenticated())
 				//.httpBasic();
 				.formLogin(Customizer.withDefaults()); // 預設表單登入頁面
