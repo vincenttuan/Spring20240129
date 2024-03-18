@@ -29,7 +29,7 @@ public class CustomerController {
 	
 	@GetMapping("/username")
 	public ResponseEntity<ApiResponse<String>> getLoginUsername(Principal principal) {
-		String username = principal.getName();
+		String username = principal.getName(); // 取得登入者的名字
 		ApiResponse<String> apiResponse = new ApiResponse<>(true, StatusMessage.成功.name(), username);
 		return ResponseEntity.ok(apiResponse);
 	}
