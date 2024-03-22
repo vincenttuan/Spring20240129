@@ -60,12 +60,15 @@ const addProduct = async() => {
 //-----------------------------------------------------------------
 
 // 渲染 customers 的函數 
+// class="pure-button button-delete customer-button-delete"
+// pure-button button-delete 給 css 用
+// customer-button-delete 給程式判斷使用 
 const renderCustomer = ({id, username, password}) => `
 	<tr>
 		<td>${id}</td>
 		<td>${username}</td>
 		<td>${password}</td>
-		<td><span data-id="${id}" id="customer-delete-submit" class="pure-button button-delete">刪除</td>
+		<td><span data-id="${id}" id="customer-delete-submit" class="pure-button button-delete customer-button-delete">刪除</td>
 	</tr>
 `;
 
@@ -161,6 +164,6 @@ document.addEventListener("DOMContentLoaded", async() => {
 	// 3.2.3 customer 刪除元件設定
 	$("customers-list-table").addEventListener("click", (event) => {
 		event.preventDefault(); // 取消該元件的預設行為
-		console.log(event);	
+		console.log(event.target.classList);	
 	});
 });
