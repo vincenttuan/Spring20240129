@@ -65,7 +65,7 @@ const renderCustomer = ({id, username, password}) => `
 		<td>${id}</td>
 		<td>${username}</td>
 		<td>${password}</td>
-		<td><span id="customer-delete-submit" class="pure-button button-delete">刪除</td>
+		<td><span data-id="${id}" id="customer-delete-submit" class="pure-button button-delete">刪除</td>
 	</tr>
 `;
 
