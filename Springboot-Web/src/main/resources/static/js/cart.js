@@ -42,6 +42,11 @@ const fetchAndRenderData = async(url, containerId, renderFn) => {
 	const response = await fetch(url);
 	const {status, message, data} = await response.json();
 	console.log(status, message, data);
+	// data.map(renderFn) 會得到一個數組，其中每個元素是 renderFn 函數的返回值
+	// .join('') 用於將數組轉換為字符串給 innerHTML 屬性當作參數使用 
+	// Array.isArray(data) 用於判斷 data 是否是數組
+	// 如果 data 是數組，則使用 data.map(renderFn).join('') 作為 innerHTML 的參數
+	// 如果 data 不是數組，則直接使用 renderFn(data) 作為 innerHTML 的參數
 	$(containerId).innerHTML = data.map(renderFn).join('');
 };
 
