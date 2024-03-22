@@ -68,6 +68,26 @@ const renderCustomer = ({id, username, password}) => `
 	</tr>
 `;
 
+// 新增 customer 的函數 
+const addCustomer = async() => {
+	const url = `${REMOTE_URL}/customers`;
+	const response = await fetch(url, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			name: $('customer-username-input').value,
+			cost: $('customer-password-input').value
+		})
+	});
+	
+	const {status, message, data} = await response.json();
+	alert(message); 
+	// 重新渲染客戶列表
+	fetchAndRenderData('/customers', 'customers-body', renderCustomer);
+};
+
 //-----------------------------------------------------------------
 // 取得指定資源並渲染到指定容器中
 const fetchAndRenderData = async(url, containerId, renderFn) => {
@@ -120,5 +140,18 @@ document.addEventListener("DOMContentLoaded", async() => {
 		event.preventDefault(); // 取消該元件的預設行為
 		$("products-list-table").style.display = "none";
 		$("products-add-table").style.display = "";
+	});
+	// 3.2 customer 相關元件設定
+	$("customer-add-submit").addEventListener("click", addCustomer);
+	$("customers-add-table").style.display = "none";
+	$("customers-list-link").addEventListener("click", (event) => {
+		event.preventDefault(); // 取消該元件的預設行為
+		$("customers-list-table").style.display = "";
+		$("customers-add-table").style.display = "none";
+	});
+	$("customers-add-link").addEventListener("click", (event) => {
+		event.preventDefault(); // 取消該元件的預設行為
+		$("customers-list-table").style.display = "none";
+		$("customers-add-table").style.display = "";
 	});
 });
