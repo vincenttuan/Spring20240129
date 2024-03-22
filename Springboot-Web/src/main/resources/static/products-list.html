@@ -6,7 +6,7 @@
 			&nbsp;|&nbsp; 
 			Add
 		</legend>
-		<table class="pure-table pure-table-bordered">
+		<table id="products-list-table" class="pure-table pure-table-bordered">
 			<thead>
 				<tr>
 					<th>Id</th>
@@ -20,6 +20,29 @@
 			<tbody id="products-body">
 				
 			</tbody>
+		</table>
+		<table id="products-add-table" class="pure-table pure-table-bordered">
+			<tr>
+				<td>Name</td>
+				<td><input id="product-name-input" type="text" placeholder="請輸入商品名稱" /></td>
+			</tr>
+			<tr>
+				<td>Cost</td>
+				<td><input id="product-cost-input" type="number" placeholder="請輸入商品成本" value="0" /></td>
+			</tr>
+			<tr>
+				<td>Price</td>
+				<td><input id="product-price-input" type="number" placeholder="請輸入商品價格" value="0" /></td>
+			</tr>
+			<tr>
+				<td>Qty</td>
+				<td><input id="product-qty-input" type="number" placeholder="請輸入商品數量" value="0" /></td>
+			</tr>
+			<tr>
+				<td span="2">
+					<span id="product-add-submit" class="pure-button button-secondary" >新增商品</span>
+				</td>
+			</tr>
 		</table>
 	</fieldset>
 </form>
