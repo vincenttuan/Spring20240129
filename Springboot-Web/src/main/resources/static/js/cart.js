@@ -65,6 +65,7 @@ const renderCustomer = ({id, username, password}) => `
 		<td>${id}</td>
 		<td>${username}</td>
 		<td>${password}</td>
+		<td></td>
 	</tr>
 `;
 
