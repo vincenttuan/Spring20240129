@@ -1,6 +1,8 @@
+const REMOTE_URL = 'http://localhost:8080';
 
 const fetchUsername = async() => {
-	const response = await fetch('http://localhost:8080/user/name');
+	const url = REMOTE_URL + '/user/name';
+	const response = await fetch(url);
 	if(response.ok) {
 		const {data, status, message} = await response.json();
 		console.log(data);
@@ -33,6 +35,12 @@ const renderProduct = ({id, name, cost, price, qty}) => `
 		<td class="pure-button">B</td>
 	</tr>
 `;
+
+// 取得指定資源並渲染到指定容器中
+const fetchAndRenderData = async(url, containerId, renderFn) => {
+	url = REMOTE_URL + url;
+	const response = await fetch(url);
+};
 
 const $ = (id) => {
 	return document.getElementById(id);
