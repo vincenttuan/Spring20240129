@@ -143,16 +143,24 @@ document.addEventListener("DOMContentLoaded", async() => {
 		$("products-add-table").style.display = "";
 	});
 	// 3.2 customer 相關元件設定
-	$("customer-add-submit").addEventListener("click", addCustomer);
+	// 3.2.1 List | Add UI 切換設定
 	$("customers-add-table").style.display = "none";
 	$("customers-list-link").addEventListener("click", (event) => {
 		event.preventDefault(); // 取消該元件的預設行為
 		$("customers-list-table").style.display = "";
 		$("customers-add-table").style.display = "none";
 	});
+	
 	$("customers-add-link").addEventListener("click", (event) => {
 		event.preventDefault(); // 取消該元件的預設行為
 		$("customers-list-table").style.display = "none";
 		$("customers-add-table").style.display = "";
+	});
+	// 3.2.2 customer 新增元件設定
+	$("customer-add-submit").addEventListener("click", addCustomer);
+	// 3.2.3 customer 刪除元件設定
+	$("customers-list-table").addEventListener("click", (event) => {
+		event.preventDefault(); // 取消該元件的預設行為
+		console.log(event);	
 	});
 });
