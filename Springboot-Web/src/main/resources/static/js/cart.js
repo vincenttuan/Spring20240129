@@ -40,6 +40,8 @@ const renderProduct = ({id, name, cost, price, qty}) => `
 const fetchAndRenderData = async(url, containerId, renderFn) => {
 	url = REMOTE_URL + url;
 	const response = await fetch(url);
+	const {status, message, data} = await response.json();
+	console.log(status, message, data);
 };
 
 const $ = (id) => {
