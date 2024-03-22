@@ -36,6 +36,28 @@ const renderProduct = ({id, name, cost, price, qty}) => `
 	</tr>
 `;
 
+// 新增 product 的函數 
+const addProduct = async() => {
+	const url = `${REMOTE_URL}/products`;
+	const response = await fetch(url, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			name: $('product-name-input').value,
+			cost: $('product-cost-input').value,
+			price: $('product-price-input').value,
+			qty: $('product-qty-input').value
+		})
+	});
+	
+	const {status, message, data} = await response.json();
+	alert(message); 
+	
+};
+//-----------------------------------------------------------------
+
 // 渲染 customers 的函數 
 const renderCustomer = ({id, username, password}) => `
 	<tr>
@@ -45,6 +67,7 @@ const renderCustomer = ({id, username, password}) => `
 	</tr>
 `;
 
+//-----------------------------------------------------------------
 // 取得指定資源並渲染到指定容器中
 const fetchAndRenderData = async(url, containerId, renderFn) => {
 	url = REMOTE_URL + url;
@@ -84,5 +107,6 @@ document.addEventListener("DOMContentLoaded", async() => {
 	
 	// 3. 網頁元件狀態配置
 	$("logout").addEventListener("click", logout);
-	
+	// 3.1 product 相關元件設定
+	$("product-add-submit").addEventListener("click", addProduct);
 });
