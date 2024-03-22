@@ -36,6 +36,15 @@ const renderProduct = ({id, name, cost, price, qty}) => `
 	</tr>
 `;
 
+// 渲染 customers 的函數 
+const renderCustomer = ({id, username, password}) => `
+	<tr>
+		<td>${id}</td>
+		<td>${username}</td>
+		<td>${password}</td>
+	</tr>
+`;
+
 // 取得指定資源並渲染到指定容器中
 const fetchAndRenderData = async(url, containerId, renderFn) => {
 	url = REMOTE_URL + url;
@@ -67,6 +76,7 @@ document.addEventListener("DOMContentLoaded", async() => {
 	fetchUsername();
 	// 2.2 取得並渲染 product
 	fetchAndRenderData('/products', 'products-body', renderProduct);
+	fetchAndRenderData('/customers', 'customers-body', renderCustomer);
 	
 	// 2.3 取得並渲染 order
 	
