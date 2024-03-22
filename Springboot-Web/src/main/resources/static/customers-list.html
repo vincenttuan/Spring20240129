@@ -1,6 +1,11 @@
 <form id="customers-list" class="pure-form">
 	<fieldset>
-		<legend>Customer List</legend>
+		<legend>
+			Customer:&nbsp;  
+			<a id="customers-list-link" href="" title="按我一下可以觀看客戶列表">List</a>
+			&nbsp;|&nbsp; 
+			<a id="customers-add-link" href="" title="按我一下可以新增客戶">Add</a>
+		</legend>
 		<table class="pure-table pure-table-bordered">
 			<thead>
 				<tr>
@@ -12,6 +17,21 @@
 			<tbody id="customers-body">
 
 			</tbody>
+		</table>
+		<table id="customers-add-table" class="pure-table pure-table-bordered">
+			<tr>
+				<td>Username</td>
+				<td><input id="customer-username-input" type="text" placeholder="請輸入使用者名稱" /></td>
+			</tr>
+			<tr>
+				<td>Password</td>
+				<td><input id="customer-password-input" type="text" placeholder="請輸入使用者密碼" value="0" /></td>
+			</tr>
+			<tr>
+				<td span="2">
+					<span id="customer-add-submit" class="pure-button button-secondary" >新增使用者</span>
+				</td>
+			</tr>
 		</table>
 	</fieldset>
 </form>
