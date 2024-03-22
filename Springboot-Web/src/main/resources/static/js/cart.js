@@ -62,7 +62,7 @@ const addProduct = async() => {
 // 渲染 customers 的函數 
 // class="pure-button button-delete customer-button-delete"
 // pure-button button-delete 給 css 用
-// customer-button-delete 給程式判斷使用 
+// customer-button-delete 給程式判斷使用不是要給 css 用
 const renderCustomer = ({id, username, password}) => `
 	<tr>
 		<td>${id}</td>
