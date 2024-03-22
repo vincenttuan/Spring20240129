@@ -110,4 +110,15 @@ document.addEventListener("DOMContentLoaded", async() => {
 	$("logout").addEventListener("click", logout);
 	// 3.1 product 相關元件設定
 	$("product-add-submit").addEventListener("click", addProduct);
+	$("products-add-table").style.display = "none";
+	$("products-list-link").addEventListener("click", (event) => {
+		event.preventDefault(); // 取消該元件的預設行為
+		$("products-list-table").style.display = "";
+		$("products-add-table").style.display = "none";
+	});
+	$("products-add-link").addEventListener("click", (event) => {
+		event.preventDefault(); // 取消該元件的預設行為
+		$("products-list-table").style.display = "none";
+		$("products-add-table").style.display = "";
+	});
 });
