@@ -92,6 +92,20 @@ const addCustomer = async() => {
 	fetchAndRenderData('/customers', 'customers-body', renderCustomer);
 };
 
+// 刪除客戶
+const handleDeleteCustomer = async(customerId) => {
+	console.log("刪除客戶 id = ", customerId);
+	const url = `${REMOTE_URL}/customers/${customerId}`;
+	const response = await fetch(url, {
+		method: 'DELETE'
+	});
+	const {status, message, data} = await response.json();
+	console.log(status, message, data);
+	alert(message);
+	// 重新渲染客戶列表
+	fetchAndRenderData('/customers', 'customers-body', renderCustomer);
+};
+
 //-----------------------------------------------------------------
 // 取得指定資源並渲染到指定容器中
 const fetchAndRenderData = async(url, containerId, renderFn) => {
