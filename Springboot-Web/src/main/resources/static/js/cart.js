@@ -42,6 +42,7 @@ const fetchAndRenderData = async(url, containerId, renderFn) => {
 	const response = await fetch(url);
 	const {status, message, data} = await response.json();
 	console.log(status, message, data);
+	$(containerId).innerHTML = data.map(renderFn).join('');
 };
 
 const $ = (id) => {
