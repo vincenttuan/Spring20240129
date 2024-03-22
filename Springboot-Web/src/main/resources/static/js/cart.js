@@ -22,17 +22,40 @@ const loadHTML = async(filePath, containerId) => {
 	$(containerId).innerHTML = data; // 將網頁內容放到指定容器中
 };
 
+// 渲染 products 的函數 
+const renderProduct = ({id, name, cost, price, qty}) => `
+	<tr>
+		<td>${id}</td>
+		<td>${name}</td>
+		<td>${cost}</td>
+		<td>${price}</td>
+		<td>${qty}</td>
+		<td class="pure-button">B</td>
+	</tr>
+`;
+
 const $ = (id) => {
 	return document.getElementById(id);
 };
 
 // 等待 DOM 加載完畢後再執行
 document.addEventListener("DOMContentLoaded", async() => {
-	$("logout").addEventListener("click", logout);
-	
-	fetchUsername(); // 取得 username
+	// 1. 配置子網頁
 	await loadHTML('products-list.html', 'products-container');
-	await loadHTML('customers-list.html', 'customers-container');
 	await loadHTML('orders-list.html', 'orders-container');
+	await loadHTML('customers-list.html', 'customers-container');
+	
+	// 2. 取得預設資源並渲染 
+	// 2.1 取得並渲染 username
+	fetchUsername();
+	// 2.2 取得並渲染 product
+	fetchAndRenderDate('/products', 'products-body', renderProduct);
+	
+	// 2.3 取得並渲染 order
+	
+	// 2.4 取得並渲染 cutomer
+	
+	// 3. 網頁元件狀態配置
+	$("logout").addEventListener("click", logout);
 	
 });
