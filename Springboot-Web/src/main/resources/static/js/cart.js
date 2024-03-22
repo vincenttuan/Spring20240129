@@ -47,7 +47,8 @@ const fetchAndRenderData = async(url, containerId, renderFn) => {
 	// Array.isArray(data) 用於判斷 data 是否是數組
 	// 如果 data 是數組，則使用 data.map(renderFn).join('') 作為 innerHTML 的參數
 	// 如果 data 不是數組，則直接使用 renderFn(data) 作為 innerHTML 的參數
-	$(containerId).innerHTML = data.map(renderFn).join('');
+	//$(containerId).innerHTML = data.map(renderFn).join('');
+	$(containerId).innerHTML = Array.isArray(data) ? data.map(renderFn).join('') : data.map(renderFn);
 };
 
 const $ = (id) => {
