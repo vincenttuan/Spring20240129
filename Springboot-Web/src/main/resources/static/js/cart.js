@@ -54,7 +54,8 @@ const addProduct = async() => {
 	
 	const {status, message, data} = await response.json();
 	alert(message); 
-	
+	// 重新渲染產品列表
+	fetchAndRenderData('/products', 'products-body', renderProduct);
 };
 //-----------------------------------------------------------------
 
