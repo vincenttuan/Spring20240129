@@ -164,6 +164,11 @@ document.addEventListener("DOMContentLoaded", async() => {
 	// 3.2.3 customer 刪除元件設定
 	$("customers-list-table").addEventListener("click", (event) => {
 		event.preventDefault(); // 取消該元件的預設行為
-		console.log(event.target.classList);	
+		//console.log(event.target.classList);
+		if(event.target.classList.contains('customer-button-delete')) {
+			console.log('按下客戶刪除');
+			const customerId = event.target.getAttribute('data-id');
+			console.log('客戶id:', customerId);
+		}	
 	});
 });
