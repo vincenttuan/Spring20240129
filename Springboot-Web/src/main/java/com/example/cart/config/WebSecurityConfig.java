@@ -34,8 +34,8 @@ public class WebSecurityConfig {
 				.requestMatchers("/customers/**").hasRole("ADMIN")
 				.requestMatchers("/products/**").hasAnyRole("USER", "ADMIN")
 				.anyRequest().authenticated())
-				//.httpBasic();
-				.formLogin(Customizer.withDefaults())  // 預設表單登入頁面
+				.httpBasic(Customizer.withDefaults()) // 啟用 HTTP 基本驗證, 給 Rest 工具測試使用(例如: Insomnia, Postman) 
+				.formLogin(Customizer.withDefaults())  // 預設表單登入頁面, 給網頁用
 				.csrf(csrf -> csrf.disable()) // 關閉 CSRF(跨站請求偽造) 保護 
 				.cors(Customizer.withDefaults()); // 預設: 啟用 CORS (跨域資源共享)  
 		
