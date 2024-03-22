@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", async() => {
 	// 2.1 取得並渲染 username
 	fetchUsername();
 	// 2.2 取得並渲染 product
-	fetchAndRenderDate('/products', 'products-body', renderProduct);
+	fetchAndRenderData('/products', 'products-body', renderProduct);
 	
 	// 2.3 取得並渲染 order
 	
