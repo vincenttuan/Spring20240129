@@ -169,6 +169,8 @@ document.addEventListener("DOMContentLoaded", async() => {
 			console.log('按下客戶刪除');
 			const customerId = event.target.getAttribute('data-id');
 			console.log('客戶id:', customerId);
+			// 刪除客戶
+			handleDeleteCustomer(customerId);
 		}	
 	});
 });
