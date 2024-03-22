@@ -77,8 +77,8 @@ const addCustomer = async() => {
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify({
-			name: $('customer-username-input').value,
-			cost: $('customer-password-input').value
+			username: $('customer-username-input').value,
+			password: $('customer-password-input').value
 		})
 	});
 	
