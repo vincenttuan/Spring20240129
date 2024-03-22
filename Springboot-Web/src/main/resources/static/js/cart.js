@@ -32,7 +32,7 @@ const renderProduct = ({id, name, cost, price, qty}) => `
 		<td>${cost}</td>
 		<td>${price}</td>
 		<td>${qty}</td>
-		<td class="pure-button button-add">B</td>
+		<td><span class="button-add pure-button">B</span></td>
 	</tr>
 `;
 
