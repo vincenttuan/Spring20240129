@@ -123,8 +123,7 @@ const handleDeleteCustomer = async(customerId) => {
 };
 
 //-----------------------------------------------------------------
-// 渲染 orders 的函數
-// 渲染訂單列表的函數
+// 渲染訂單列表(orders)的函數
 const renderOrder = ({ id, date, customerDto, total, updatable, itemDtos }) => {
     // 在遍歷 itemDtos 時，將 updatable 傳給 renderOrderItem
     const orderItemsHtml = itemDtos.map(itemDto => 
