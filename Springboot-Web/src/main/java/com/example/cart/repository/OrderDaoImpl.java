@@ -59,14 +59,15 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
 	public List<Item> getItemsByOrderId(Integer orderId) {
-		// TODO Auto-generated method stub
-		return null;
+		return items.stream()
+				.filter(item -> item.getOrderId().equals(orderId))
+				.toList();
 	}
 
 	@Override
 	public Boolean isProductInOrder(Integer productId) {
-		// TODO Auto-generated method stub
-		return null;
+		return items.stream()
+				.anyMatch(item -> item.getProductId().equals(productId));
 	}
 
 	@Override
