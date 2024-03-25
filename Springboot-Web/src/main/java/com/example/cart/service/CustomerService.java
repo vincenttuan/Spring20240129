@@ -51,5 +51,9 @@ public class CustomerService {
 	public Boolean deleteCustomerById(Integer id) {
 		return customerDao.deleteCustomerById(id);
 	}
-		
+	
+	public CustomerDto getCustomerByUsername(String username) {
+		Customer customer = customerDao.getCustomerByUsername(username);
+		return modelMapper.map(customer, CustomerDto.class);
+	}
 }
