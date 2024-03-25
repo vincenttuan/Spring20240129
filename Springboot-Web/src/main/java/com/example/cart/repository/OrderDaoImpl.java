@@ -31,20 +31,22 @@ public class OrderDaoImpl implements OrderDao {
 	
 	@Override
 	public List<Order> getAllOrders() {
-		// TODO Auto-generated method stub
-		return null;
+		return orders;
 	}
 
 	@Override
 	public List<Order> getOrdersByCustomerId(Integer customerId) {
-		// TODO Auto-generated method stub
-		return null;
+		return orders.stream()
+				.filter(order -> order.getCustomerId().equals(customerId))
+				.toList();
 	}
 
 	@Override
 	public Order getOrderById(Integer orderId) {
-		// TODO Auto-generated method stub
-		return null;
+		return orders.stream()
+				.filter(order -> order.getId().equals(orderId))
+				.findFirst()
+				.orElse(null);
 	}
 
 	@Override
