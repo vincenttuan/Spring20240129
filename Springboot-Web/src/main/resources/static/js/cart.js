@@ -162,7 +162,10 @@ document.addEventListener("DOMContentLoaded", async() => {
 	});
 	// 3.1.2 product 新增元件設定
 	$("product-add-submit").addEventListener("click", addProduct);
-	// 3.1.3 
+	// 3.1.3 product 刪除元件設定
+	$('customers-list-table').addEventListener("click", (event) => {
+		
+	});
 	
 	// 3.2 customer 相關元件設定
 	// 3.2.1 List | Add UI 切換設定
