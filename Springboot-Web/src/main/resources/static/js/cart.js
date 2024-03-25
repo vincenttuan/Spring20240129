@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", async() => {
 	// 3. 網頁元件狀態配置
 	$("logout").addEventListener("click", logout);
 	// 3.1 product 相關元件設定
-	$("product-add-submit").addEventListener("click", addProduct);
+	// 3.1.1 List | Add UI 切換設定
 	$("products-add-table").style.display = "none";
 	$("products-list-link").addEventListener("click", (event) => {
 		event.preventDefault(); // 取消該元件的預設行為
@@ -160,6 +160,10 @@ document.addEventListener("DOMContentLoaded", async() => {
 		$("products-list-table").style.display = "none";
 		$("products-add-table").style.display = "";
 	});
+	// 3.1.2 product 新增元件設定
+	$("product-add-submit").addEventListener("click", addProduct);
+	// 3.1.3 
+	
 	// 3.2 customer 相關元件設定
 	// 3.2.1 List | Add UI 切換設定
 	$("customers-add-table").style.display = "none";
@@ -187,7 +191,6 @@ document.addEventListener("DOMContentLoaded", async() => {
 			console.log('客戶id:', customerId);
 			// 刪除客戶
 			handleDeleteCustomer(customerId);
-		}
-			
+		}	
 	});
 });
