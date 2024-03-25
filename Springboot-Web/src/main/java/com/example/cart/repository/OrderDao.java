@@ -16,4 +16,9 @@ public interface OrderDao {
 	// 找到該客戶在指定日期的訂單
 	public Order getOrderByCustomerIdAndDate(Integer customerId, String date);
 	
+	public Order addOrder(Order order);
+	public Item addOrReduceOrderItem(Integer orderId, Integer productId, Integer amount);
+	public Order updateOrder(Order order);
+	public Boolean deleteOrder(Integer orderId);
+	public Boolean deleteOrderItem(Integer itemId);
 }
