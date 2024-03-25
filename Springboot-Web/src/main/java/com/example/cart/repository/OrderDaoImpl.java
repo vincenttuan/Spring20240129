@@ -72,14 +72,18 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
 	public Order getOrderByCustomerIdAndDate(Integer customerId, String date) {
-		// TODO Auto-generated method stub
-		return null;
+		return orders.stream()
+				.filter(order -> order.getCustomerId().equals(customerId) && order.getDate().equals(date))
+				.findFirst()
+				.orElse(null);
 	}
 
 	@Override
 	public Order addOrder(Order order) {
-		// TODO Auto-generated method stub
-		return null;
+		int maxId = orders.stream().mapToInt(o -> o.getId()).max().orElse(0);
+		order.setId(maxId + 1);
+		orders.add(order);
+		return order;
 	}
 
 	@Override
@@ -90,8 +94,13 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
 	public Order updateOrder(Order order) {
-		// TODO Auto-generated method stub
-		return null;
+		orders.stream()
+			.filter(o -> o.getId().equals(order.getId()))
+			.forEach(o -> {
+				o.setDate(order.getDate());
+				o.setCustomerId(order.getCustomerId());
+			});
+		return order;
 	}
 
 	@Override
