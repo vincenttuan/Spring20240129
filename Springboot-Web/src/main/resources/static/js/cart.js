@@ -58,6 +58,20 @@ const addProduct = async() => {
 	// 重新渲染產品列表
 	fetchAndRenderData('/products', 'products-body', renderProduct);
 };
+
+// 刪除商品
+const handleDeleteProduct = async(productId) => {
+	console.log("刪除商品 id = ", productId);
+	const url = `${REMOTE_URL}/products/${productId}`;
+	const response = await fetch(url, {
+		method: 'DELETE'
+	});
+	const {status, message, data} = await response.json();
+	console.log(status, message, data);
+	alert(message);
+	// 重新渲染商品列表
+	fetchAndRenderData('/products', 'products-body', renderProduct);
+};
 //-----------------------------------------------------------------
 
 // 渲染 customers 的函數 
