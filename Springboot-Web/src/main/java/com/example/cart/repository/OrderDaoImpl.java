@@ -90,8 +90,27 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
 	public Item addOrReduceOrderItem(Integer orderId, Integer productId, Integer amount) {
-		// TODO Auto-generated method stub
-		return null;
+		// 先找到 Item 中是否已存在 orderId 與 productId
+		Optional<Item> optItem = items.stream()
+				.filter(item -> item.getOrderId().equals(orderId) && item.getProductId().equals(productId))
+				.findFirst();
+		
+		// 若 Item 中不存在 orderId 與 productId 則新增一筆
+		if(optItem.isEmpty()) {
+			int maxId = items.stream().mapToInt(item -> item.getId()).max().orElse(0);
+			Item item = new Item(maxId + 1, orderId, productId, amount);
+			items.add(item);
+			return item;
+		}
+		
+		// 若 Item 中已存在 orderId 與 productId 則 amount 進行累加
+		Item updateItem = optItem.get();
+		updateItem.setAmount(updateItem.getAmount() + amount); // amount 的正負會影響增減
+		if(updateItem.getAmount() <= 0) {
+			items.remove(updateItem); // 若數量為 0 則移除該筆訂單項目
+			return null;
+		}		
+		return updateItem;
 	}
 
 	@Override
