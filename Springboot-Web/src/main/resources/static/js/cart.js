@@ -33,7 +33,7 @@ const renderProduct = ({id, name, cost, price, qty}) => `
 		<td>${price}</td>
 		<td>${qty}</td>
 		<td><span class="button-add pure-button">B</span></td>
-		<td><span class="button-delete pure-button product-button-delete">刪除</span></td>
+		<td><span data-id="${id}" class="button-delete pure-button product-button-delete">刪除</span></td>
 	</tr>
 `;
 
