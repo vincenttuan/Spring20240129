@@ -124,7 +124,68 @@ const handleDeleteCustomer = async(customerId) => {
 
 //-----------------------------------------------------------------
 // 渲染 orders 的函數
+// 渲染訂單列表的函數
+const renderOrder = ({ id, date, customerDto, total, updatable, itemDtos }) => {
+    // 在遍歷 itemDtos 時，將 updatable 傳給 renderOrderItem
+    const orderItemsHtml = itemDtos.map(itemDto => 
+        renderOrderItem({ ...itemDto, updatable }) // 使用擴展運算符將 itemDto 的所有屬性與 updatable 合併後傳入
+    ).join('');
+    
+    // 根據 updatable 的值動態決定是否添加 hide 類別
+    const adjustColumnClass = updatable ? '' : 'hide';
+    
+    // 将 orderItemsHtml 嵌入到最终的 HTML 结构中
+    return `
+        <tr>
+            <td>${id}</td>
+            <td>${date}</td>
+            <td>${customerDto.username}</td>
+            <td>${total}</td>
+            <td class="${updatable ? 'updatable' : 'toggle-items-visibility'}">${updatable ? '未結帳(可修改)' : '已結帳'}</td>
 
+        </tr>
+        <tr>
+            <td colspan="5">
+                <table class="pure-table custom-table">
+                	<thead>
+                	<tr>
+                        <th>Id</th>
+                        <th>商品名稱</th>
+                        <th>價格</th>
+                        <th>數量</th>
+                        <th class="${adjustColumnClass}">數量調整</th>
+                        <th>小計</th>
+                    </tr>
+                    </thead>
+                    <tbody id="orders-items-table">
+                    ${orderItemsHtml}
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    `;
+};
+
+const renderOrderItem = ({ id, orderId, productDto, amount, updatable }) => {
+    const adjustButtonsHtml = updatable ? `
+        <span class="button-add pure-button add-product-button" data-id="${productDto.id}" data-amount="1">+</span>
+        <span class="button-reduce pure-button reduce-product-button" data-id="${productDto.id}" data-amount="-1">-</span>
+    ` : '';
+	
+	// 根據 updatable 的值動態決定是否添加 hide 類別
+    const adjustColumnClass = updatable ? '' : 'hide';
+    
+    return `
+        <tr>
+            <td>${id}</td>
+            <td>${productDto.name}</td>
+            <td>${productDto.price}</td>
+            <td>${amount}</td>
+            <td class="${adjustColumnClass}">${adjustButtonsHtml}</td>
+            <td>${amount * productDto.price}</td>
+        </tr>
+    `;
+};
 
 //-----------------------------------------------------------------
 
