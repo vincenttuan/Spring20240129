@@ -33,6 +33,7 @@ const renderProduct = ({id, name, cost, price, qty}) => `
 		<td>${price}</td>
 		<td>${qty}</td>
 		<td><span class="button-add pure-button">B</span></td>
+		<td><span class="button-delete pure-button product-button-delete">刪除</span></td>
 	</tr>
 `;
 
@@ -119,7 +120,7 @@ const fetchAndRenderData = async(url, containerId, renderFn) => {
 	// 如果 data 是數組，則使用 data.map(renderFn).join('') 作為 innerHTML 的參數
 	// 如果 data 不是數組，則直接使用 renderFn(data) 作為 innerHTML 的參數
 	//$(containerId).innerHTML = data.map(renderFn).join('');
-	$(containerId).innerHTML = Array.isArray(data) ? data.map(renderFn).join('') : data.map(renderFn);
+	$(containerId).innerHTML = Array.isArray(data) ? data.map(renderFn).join(',') : data.map(renderFn);
 };
 
 const $ = (id) => {
@@ -179,12 +180,14 @@ document.addEventListener("DOMContentLoaded", async() => {
 	$("customers-list-table").addEventListener("click", (event) => {
 		event.preventDefault(); // 取消該元件的預設行為
 		//console.log(event.target.classList);
+		
 		if(event.target.classList.contains('customer-button-delete')) {
 			console.log('按下客戶刪除');
 			const customerId = event.target.getAttribute('data-id');
 			console.log('客戶id:', customerId);
 			// 刪除客戶
 			handleDeleteCustomer(customerId);
-		}	
+		}
+			
 	});
 });
