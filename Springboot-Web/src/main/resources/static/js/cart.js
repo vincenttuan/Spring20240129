@@ -163,8 +163,9 @@ document.addEventListener("DOMContentLoaded", async() => {
 	// 3.1.2 product 新增元件設定
 	$("product-add-submit").addEventListener("click", addProduct);
 	// 3.1.3 product 刪除元件設定
-	$('customers-list-table').addEventListener("click", (event) => {
-		
+	$('products-list-table').addEventListener("click", (event) => {
+		event.preventDefault(); // 取消該元件的預設行為
+		console.log(event.target.classList);
 	});
 	
 	// 3.2 customer 相關元件設定
