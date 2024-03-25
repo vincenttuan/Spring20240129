@@ -139,6 +139,7 @@ const fetchAndRenderData = async(url, containerId, renderFn) => {
 
 // 通用事件函式，用於檢查事件目標是否包含指定的類別，如果是則執行回調函數
 const handleEvent = async(event, className, callback) => {
+	event.preventDefault(); // 取消該元件的預設行為
 	if(event.target.classList.contains(className)) {
 		const id = event.target.getAttribute('data-id');
 		console.log('按下功能鍵 id:', id);
@@ -188,15 +189,8 @@ document.addEventListener("DOMContentLoaded", async() => {
 	$("product-add-submit").addEventListener("click", addProduct);
 	// 3.1.3 product 刪除元件設定
 	$('products-list-table').addEventListener("click", (event) => {
-		event.preventDefault(); // 取消該元件的預設行為
-		//console.log(event.target.classList);
-		if(event.target.classList.contains('product-button-delete')) {
-			console.log('按下產品刪除');
-			const productId = event.target.getAttribute('data-id');
-			console.log('產品id:', productId);
-			// 刪除產品
-			handleDeleteProduct(productId);
-		}
+		// 利用通用事件函式處理事件
+		handleEvent(event, 'product-button-delete', handleDeleteProduct);
 	});
 	
 	// 3.2 customer 相關元件設定
@@ -217,15 +211,7 @@ document.addEventListener("DOMContentLoaded", async() => {
 	$("customer-add-submit").addEventListener("click", addCustomer);
 	// 3.2.3 customer 刪除元件設定
 	$("customers-list-table").addEventListener("click", (event) => {
-		event.preventDefault(); // 取消該元件的預設行為
-		//console.log(event.target.classList);
-		
-		if(event.target.classList.contains('customer-button-delete')) {
-			console.log('按下客戶刪除');
-			const customerId = event.target.getAttribute('data-id');
-			console.log('客戶id:', customerId);
-			// 刪除客戶
-			handleDeleteCustomer(customerId);
-		}	
+		// 利用通用事件函式處理事件
+		handleEvent(event, 'customer-button-delete', handleDeleteCustomer);
 	});
 });
