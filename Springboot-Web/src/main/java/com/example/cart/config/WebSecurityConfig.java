@@ -31,7 +31,8 @@ public class WebSecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests((authz) -> authz
 				.requestMatchers("/css/**", "/js/**", "/image/**").permitAll()
-				.requestMatchers("/customers/**").hasRole("ADMIN")
+				//.requestMatchers("/customers/**").hasRole("ADMIN")
+				.requestMatchers("/customers/**").hasAnyRole("USER", "ADMIN")
 				.requestMatchers("/products/**").hasAnyRole("USER", "ADMIN")
 				.anyRequest().authenticated())
 				.httpBasic(Customizer.withDefaults()) // 啟用 HTTP 基本驗證, 給 Rest 工具測試使用(例如: Insomnia, Postman) 
