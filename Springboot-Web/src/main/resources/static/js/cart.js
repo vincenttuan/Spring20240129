@@ -165,7 +165,10 @@ document.addEventListener("DOMContentLoaded", async() => {
 	// 3.1.3 product 刪除元件設定
 	$('products-list-table').addEventListener("click", (event) => {
 		event.preventDefault(); // 取消該元件的預設行為
-		console.log(event.target.classList);
+		//console.log(event.target.classList);
+		if(event.target.classList.contains('product-button-delete')) {
+			console.log('product 刪除');
+		}
 	});
 	
 	// 3.2 customer 相關元件設定
