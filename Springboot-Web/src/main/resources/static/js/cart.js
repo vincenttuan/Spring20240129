@@ -125,6 +125,11 @@ const handleDeleteCustomer = async(customerId) => {
 //-----------------------------------------------------------------
 // 渲染訂單列表(orders)的函數
 const renderOrder = ({ id, date, customerDto, total, updatable, itemDtos }) => {
+	/*
+	const orderItemsHtml = itemDtos.map(({id, orderId, productDto, amount}) => 
+        renderOrderItem({ id, orderId, productDto, amount, updatable }) // 使用擴展運算符將 itemDto 的所有屬性與 updatable 合併後傳入
+    ).join('');
+    */
     // 在遍歷 itemDtos 時，將 updatable 傳給 renderOrderItem
     const orderItemsHtml = itemDtos.map(itemDto => 
         renderOrderItem({ ...itemDto, updatable }) // 使用擴展運算符將 itemDto 的所有屬性與 updatable 合併後傳入
