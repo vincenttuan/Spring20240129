@@ -170,6 +170,8 @@ document.addEventListener("DOMContentLoaded", async() => {
 			console.log('按下產品刪除');
 			const productId = event.target.getAttribute('data-id');
 			console.log('產品id:', productId);
+			// 刪除產品
+			handleDeleteProduct(productId);
 		}
 	});
 	
