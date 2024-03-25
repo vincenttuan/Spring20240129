@@ -1,17 +1,30 @@
 <form id="orders-list" class="pure-form">
 	<fieldset>
-		<legend>Orders List</legend>
+		<legend>
+			Orders List 
+			<a id="orders-today-link" href="#">Today</a>｜
+			<a id="orders-history-link" href="#">History</a>
+		</legend>
 		<table class="pure-table pure-table-bordered">
 			<thead>
 				<tr>
 					<th>Id</th>
 					<th>Date</th>
 					<th>Customer Name</th>
+					<th>Total</th>
+					<th>Updatable</th>
 				</tr>
 			</thead>
-			<tbody id="orders-body">
+			
+			<tbody id="orders-body-today">
 				
 			</tbody>
+			
+			<tbody id="orders-body-history">
+				
+			</tbody>
+			
 		</table>
+		
 	</fieldset>
 </form>
