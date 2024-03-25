@@ -137,7 +137,7 @@ const fetchAndRenderData = async(url, containerId, renderFn) => {
 	$(containerId).innerHTML = Array.isArray(data) ? data.map(renderFn).join(',') : data.map(renderFn);
 };
 
-// 通用函數，用於檢查事件目標是否包含指定的類別，如果是則執行回調函數
+// 通用事件函式，用於檢查事件目標是否包含指定的類別，如果是則執行回調函數
 const handleEvent = async(event, className, callback) => {
 	if(event.target.classList.contains(className)) {
 		const id = event.target.getAttribute('data-id');
