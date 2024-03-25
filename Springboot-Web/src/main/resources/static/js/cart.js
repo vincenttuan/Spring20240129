@@ -137,6 +137,16 @@ const fetchAndRenderData = async(url, containerId, renderFn) => {
 	$(containerId).innerHTML = Array.isArray(data) ? data.map(renderFn).join(',') : data.map(renderFn);
 };
 
+// 通用函數，用於檢查事件目標是否包含指定的類別，如果是則執行回調函數
+const handleEvent = async(event, className, callback) => {
+	if(event.target.classList.contains(className)) {
+		const id = event.target.getAttribute('data-id');
+		console.log('按下功能鍵 id:', id);
+		// 調用回呼
+		await callback(id);
+	}
+};
+
 const $ = (id) => {
 	return document.getElementById(id);
 };
