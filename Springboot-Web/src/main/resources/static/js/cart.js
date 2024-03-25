@@ -167,7 +167,9 @@ document.addEventListener("DOMContentLoaded", async() => {
 		event.preventDefault(); // 取消該元件的預設行為
 		//console.log(event.target.classList);
 		if(event.target.classList.contains('product-button-delete')) {
-			console.log('product 刪除');
+			console.log('按下產品刪除');
+			const productId = event.target.getAttribute('data-id');
+			console.log('產品id:', productId);
 		}
 	});
 	
