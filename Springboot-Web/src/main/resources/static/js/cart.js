@@ -24,6 +24,7 @@ const loadHTML = async(filePath, containerId) => {
 	$(containerId).innerHTML = data; // 將網頁內容放到指定容器中
 };
 
+//-----------------------------------------------------------------
 // 渲染 products 的函數 
 const renderProduct = ({id, name, cost, price, qty}) => `
 	<tr>
@@ -72,8 +73,8 @@ const handleDeleteProduct = async(productId) => {
 	// 重新渲染商品列表
 	fetchAndRenderData('/products', 'products-body', renderProduct);
 };
-//-----------------------------------------------------------------
 
+//-----------------------------------------------------------------
 // 渲染 customers 的函數 
 // class="pure-button button-delete customer-button-delete"
 // pure-button button-delete 給 css 用
@@ -122,6 +123,11 @@ const handleDeleteCustomer = async(customerId) => {
 };
 
 //-----------------------------------------------------------------
+// 渲染 orders 的函數
+
+
+//-----------------------------------------------------------------
+
 // 取得指定資源並渲染到指定容器中
 const fetchAndRenderData = async(url, containerId, renderFn) => {
 	url = REMOTE_URL + url;
