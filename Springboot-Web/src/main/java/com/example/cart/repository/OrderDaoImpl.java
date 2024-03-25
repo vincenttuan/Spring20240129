@@ -109,14 +109,12 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
 	public Boolean deleteOrder(Integer orderId) {
-		// TODO Auto-generated method stub
-		return null;
+		return orders.removeIf(order -> order.getId().equals(orderId));
 	}
 
 	@Override
 	public Boolean deleteOrderItem(Integer itemId) {
-		// TODO Auto-generated method stub
-		return null;
+		return items.removeIf(item -> item.getId().equals(itemId));
 	}
 
 }
