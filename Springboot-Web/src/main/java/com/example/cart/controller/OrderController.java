@@ -51,17 +51,15 @@ public class OrderController {
 		return ResponseEntity.ok(apiResponse);
 	}
 	
-	@GetMapping("/customer/{customerId}/today")
-	public ResponseEntity<ApiResponse<List<OrderDto>>> getTodayOrdersByCustomerId(
-			@PathVariable("customerId") Integer customerId, Principal principal) {
+	@GetMapping("/customer/today")
+	public ResponseEntity<ApiResponse<List<OrderDto>>> getTodayOrdersByCustomerId(Principal principal) {
 		List<OrderDto> orderDtos = orderService.getTodayOrdersByUsername(principal.getName());
 		ApiResponse<List<OrderDto>> apiResponse = new ApiResponse<>(true, "Success", orderDtos);
 		return ResponseEntity.ok(apiResponse);
 	}
 	
-	@GetMapping("/customer/{customerId}/history")
-	public ResponseEntity<ApiResponse<List<OrderDto>>> getHistoryOrdersByCustomerId(
-			@PathVariable("customerId") Integer customerId, Principal principal) {
+	@GetMapping("/customer/history")
+	public ResponseEntity<ApiResponse<List<OrderDto>>> getHistoryOrdersByCustomerId(Principal principal) {
 		List<OrderDto> orderDtos = orderService.getHistoryOrdersByUsername(principal.getName());
 		ApiResponse<List<OrderDto>> apiResponse = new ApiResponse<>(true, "Success", orderDtos);
 		return ResponseEntity.ok(apiResponse);

@@ -230,11 +230,12 @@ document.addEventListener("DOMContentLoaded", async() => {
 	fetchUsername();
 	// 2.2 取得並渲染 product
 	fetchAndRenderData('/products', 'products-body', renderProduct);
-	fetchAndRenderData('/customers', 'customers-body', renderCustomer);
 	
 	// 2.3 取得並渲染 order
+	fetchAndRenderData('/orders/customer/0/history', 'orders-body-history', renderOrder);
 	
 	// 2.4 取得並渲染 cutomer
+	fetchAndRenderData('/customers', 'customers-body', renderCustomer);
 	
 	// 3. 網頁元件狀態配置
 	$("logout").addEventListener("click", logout);
