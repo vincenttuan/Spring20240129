@@ -232,7 +232,7 @@ document.addEventListener("DOMContentLoaded", async() => {
 	fetchAndRenderData('/products', 'products-body', renderProduct);
 	
 	// 2.3 取得並渲染 order
-	fetchAndRenderData('/orders/customer/0/history', 'orders-body-history', renderOrder);
+	fetchAndRenderData('/orders/customer/history', 'orders-body-history', renderOrder);
 	
 	// 2.4 取得並渲染 cutomer
 	fetchAndRenderData('/customers', 'customers-body', renderCustomer);
