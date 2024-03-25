@@ -54,5 +54,13 @@ public class CustomerDaoInMemory implements CustomerDao {
 	public Boolean deleteCustomerById(Integer id) {
 		return customers.removeIf(customer -> customer.getId().equals(id));
 	}
+
+	@Override
+	public Customer getCustomerByUsername(String username) {
+		return customers.stream()
+				.filter(customer -> customer.getUsername().equals(username))
+				.findFirst()
+				.orElse(null);
+	}
 	
 }
