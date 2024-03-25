@@ -1,6 +1,8 @@
 package com.example.cart.repository;
 
+import java.lang.foreign.Linker.Option;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.springframework.stereotype.Repository;
@@ -94,13 +96,15 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
 	public Order updateOrder(Order order) {
-		orders.stream()
-			.filter(o -> o.getId().equals(order.getId()))
-			.forEach(o -> {
-				o.setDate(order.getDate());
-				o.setCustomerId(order.getCustomerId());
-			});
-		return order;
+		// 新找到 orders 中是否有該筆資料
+		Optional<Order> orderOpt = orders.stream().filter(o -> o.getId().equals(order.getId())).findFirst();
+		if(orderOpt.isEmpty()) {
+			return null; // 資料庫無該筆訂單紀錄
+		}
+		Order updateOrder = orderOpt.get(); // 得到要修改的訂單改得
+		updateOrder.setDate(order.getDate());
+		updateOrder.setCustomerId(order.getCustomerId());
+		return updateOrder;
 	}
 
 	@Override
