@@ -149,19 +149,21 @@ public class OrderService {
 		order = orderDao.updateOrder(order);
 		return getOrderById(order.getId());
 	}
-
+	
+	// 刪除訂單
 	public Boolean deleteOrder(Integer orderId) {
 		return orderDao.deleteOrder(orderId);
 	}
-
+	
+	// 刪除訂單項目
 	public Boolean deleteOrderItem(Integer itemId) {
+		// 取得訂單項目的商品ID與購買數量
+		Item item = orderDao.getItemById(itemId);
+		Integer amount = item.getAmount(); // 購買數量
+		Integer productId = item.getProductId(); // 商品 id
 		// 刪除訂單項目
 		Boolean status = orderDao.deleteOrderItem(itemId);
 		if(status) {
-			// 取得訂單項目的商品ID與購買數量
-			Item item = orderDao.getItemById(itemId);
-			Integer amount = item.getAmount(); // 購買數量
-			Integer productId = item.getProductId(); // 商品 id
 			// 將該訂單商品的數量回滾到商品庫存中
 			productDao.addProductQty(itemId, productId);
 		}
