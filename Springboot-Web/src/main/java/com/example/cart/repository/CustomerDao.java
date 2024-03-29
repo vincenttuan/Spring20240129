@@ -11,5 +11,6 @@ public interface CustomerDao {
 	Customer addCustomer(Customer customer);
 	Customer updateCustomer(Customer customer);
 	Boolean deleteCustomerById(Integer id);
-	
+	// 修改密碼
+	Boolean updatePassword(Integer id, String encodedPassword);
 }
