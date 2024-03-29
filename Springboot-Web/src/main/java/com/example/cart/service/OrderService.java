@@ -155,7 +155,17 @@ public class OrderService {
 	}
 
 	public Boolean deleteOrderItem(Integer itemId) {
-		return orderDao.deleteOrderItem(itemId);
+		// 刪除訂單項目
+		Boolean status = orderDao.deleteOrderItem(itemId);
+		if(status) {
+			// 取得訂單項目的商品ID與購買數量
+			Item item = orderDao.getItemById(itemId);
+			Integer amount = item.getAmount(); // 購買數量
+			Integer productId = item.getProductId(); // 商品 id
+			// 將該訂單商品的數量回滾到商品庫存中
+			productDao.addProductQty(itemId, productId);
+		}
+		return status;
 	}
 	
 	public OrderDto getOrderByCustomerIdAndDate(Integer customerId, String date) {
