@@ -1,10 +1,9 @@
 <form id="products-list" class="pure-form">
 	<fieldset>
 		<legend>
-			Product:&nbsp;  
-			<a id="products-list-link" href="" title="按我一下可以觀看產品列表">List</a>
-			&nbsp;|&nbsp; 
-			<a id="products-add-link" href="" title="按我一下可以新增產品">Add</a>
+			Product 
+			<a id="products-list-link" href="">List</a>｜
+			<a id="products-add-link" href="">Add</a>
 		</legend>
 		<table id="products-list-table" class="pure-table pure-table-bordered">
 			<thead>
@@ -15,33 +14,33 @@
 					<th>Price</th>
 					<th>Qty</th>
 					<th>Buy</th>
-					<th>刪除</th>
+					<th>Delete</th>
 				</tr>
 			</thead>
 			<tbody id="products-body">
-				
+
 			</tbody>
 		</table>
-		<table id="products-add-table" class="pure-table pure-table-bordered">
+		<table id="products-add-table" class="pure-table pure-table-bordered" style="display: 'none'">
 			<tr>
 				<td>Name</td>
-				<td><input id="product-name-input" type="text" placeholder="請輸入商品名稱" /></td>
+				<td><input id="product-name-input" type="text" placeholder="請輸入 name"></td>
 			</tr>
 			<tr>
 				<td>Cost</td>
-				<td><input id="product-cost-input" type="number" placeholder="請輸入商品成本" value="0" /></td>
-			</tr>
+				<td><input id="product-cost-input" type="number" placeholder="請輸入 cost" value="0"></td>
+				</tr>
 			<tr>
-				<td>Price</td>
-				<td><input id="product-price-input" type="number" placeholder="請輸入商品價格" value="0" /></td>
-			</tr>
+                <td>Price</td>
+                <td><input id="product-price-input" type="number" placeholder="請輸入 price" value="0"></td>
+            </tr>
+            <tr>
+                <td>Qty</td>
+                <td><input id="product-qty-input" type="number" placeholder="請輸入 qty" value="0"></td>
+            </tr>
 			<tr>
-				<td>Qty</td>
-				<td><input id="product-qty-input" type="number" placeholder="請輸入商品數量" value="0" /></td>
-			</tr>
-			<tr>
-				<td span="2">
-					<span id="product-add-submit" class="pure-button button-secondary" >新增商品</span>
+				<td>
+					<span id="products-add-submit" class="pure-button">新增商品</span>
 				</td>
 			</tr>
 		</table>
