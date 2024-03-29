@@ -84,6 +84,5 @@ public class ProductDaoInMemory implements ProductDao {
 	public Boolean deleteProductById(Integer id) {
 		return products.removeIf(p -> p.getId().equals(id));
 	}
-	
-	
+
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.cart.model.dto.ProductDto;
 import com.example.cart.model.po.Product;
+import com.example.cart.repository.OrderDao;
 import com.example.cart.repository.ProductDao;
 
 @Service
@@ -16,6 +17,10 @@ public class ProductService {
 	@Autowired
 	@Qualifier("InMemoryProduct")
 	private ProductDao productDao;
+	
+	@Autowired
+	@Qualifier("InMemoryOrder")
+	private OrderDao orderDao;
 	
 	@Autowired
 	private ModelMapper modelMapper;
@@ -92,7 +97,9 @@ public class ProductService {
 	
 	public Boolean deleteProductById(Integer id) {
 		// 若 order item 中有此商品則不可刪除
-		
+		if(orderDao.isProductInOrder(id)) {
+			return false;
+		}
 		return id == null ? false : productDao.deleteProductById(id);
 	}
 }

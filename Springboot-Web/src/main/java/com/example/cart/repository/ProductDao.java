@@ -14,6 +14,4 @@ public interface ProductDao {
 	Product addProductQty(Integer id, Integer increment); // 增量庫存
 	Product reduceProductQty(Integer id, Integer decrement); // 減量庫存
 	Boolean deleteProductById(Integer id);
-	// 判斷 order item 中是否有指定的 productId 的商品 
-	Boolean isProductInOrder(Integer productId);
 }
