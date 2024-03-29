@@ -165,7 +165,7 @@ public class OrderService {
 		Boolean status = orderDao.deleteOrderItem(itemId);
 		if(status) {
 			// 將該訂單商品的數量回滾到商品庫存中
-			productDao.addProductQty(itemId, productId);
+			productDao.addProductQty(productId, amount);
 		}
 		return status;
 	}
