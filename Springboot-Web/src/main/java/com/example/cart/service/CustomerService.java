@@ -56,4 +56,8 @@ public class CustomerService {
 		Customer customer = customerDao.getCustomerByUsername(username);
 		return modelMapper.map(customer, CustomerDto.class);
 	}
+	
+	public Boolean updatePassword(Integer id, String encodedPassword) {
+		return customerDao.updatePassword(id, encodedPassword);
+	}
 }
