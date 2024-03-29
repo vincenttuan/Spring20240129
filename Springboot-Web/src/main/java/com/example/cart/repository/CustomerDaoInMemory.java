@@ -62,5 +62,15 @@ public class CustomerDaoInMemory implements CustomerDao {
 				.findFirst()
 				.orElse(null);
 	}
+
+	@Override
+	public Boolean updatePassword(Integer id, String encodedPassword) {
+		Customer customer = getCustomerById(id);
+		if(customer == null) {
+			return false;
+		}
+		customer.setPassword(encodedPassword);
+		return true;
+	}
 	
 }
