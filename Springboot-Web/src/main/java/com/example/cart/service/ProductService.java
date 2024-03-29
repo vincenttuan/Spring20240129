@@ -91,6 +91,8 @@ public class ProductService {
 	}
 	
 	public Boolean deleteProductById(Integer id) {
+		// 若 order item 中有此商品則不可刪除
+		
 		return id == null ? false : productDao.deleteProductById(id);
 	}
 }
