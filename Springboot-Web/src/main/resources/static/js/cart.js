@@ -302,8 +302,6 @@ const addCustomer = async () => {
 // 處理更新客戶密碼的異步邏輯
 const handleUpdateCustomerPassword = async (customerId) => {
 	const fullUrl = `${REMOTE_URL}/customers/${customerId}/update-password`;
-	// 使用 prompt 函數彈出對話框請求用戶輸入新密碼
-	
 	// 使用 Swal.fire 白底彈窗請求用戶輸入新密碼
 	var { value: newpassword } = await Swal.fire({
 		title: '請輸入新密碼',
