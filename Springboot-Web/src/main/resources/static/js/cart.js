@@ -274,7 +274,7 @@ const handleDeleteProduct = async (productId) => {
 
 // -- customers ------------------------------------------------------ 
 
-// 新增商品的函數
+// 新增客戶的函數
 const addCustomer = async () => {
 	// post http://localhost:8080/customers
 	const fullUrl = `${REMOTE_URL}/customers`;
