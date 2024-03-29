@@ -77,7 +77,8 @@ public class CustomerService implements UserDetailsService {
 		}
 		return User.builder()
 				.username(customer.getUsername())
-				.password(passwordEncoder.encode(customer.getPassword())) // 若密碼未加密, 須加密
+				//.password(passwordEncoder.encode(customer.getPassword())) // 若密碼未加密, 須加密
+				.password(customer.getPassword()) // 密碼已加密
 				.roles(customer.getRole())
 				.build();
 
