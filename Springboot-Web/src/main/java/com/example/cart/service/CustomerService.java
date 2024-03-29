@@ -68,7 +68,8 @@ public class CustomerService implements UserDetailsService {
 	public Boolean updatePassword(Integer id, String encodedPassword) {
 		return customerDao.updatePassword(id, encodedPassword);
 	}
-
+	
+	// spring-security 登入時會使用
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Customer customer = customerDao.getCustomerByUsername(username);
