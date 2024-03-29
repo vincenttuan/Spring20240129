@@ -14,10 +14,10 @@ public class CustomerDaoInMemory implements CustomerDao {
 	private static List<Customer> customers = new CopyOnWriteArrayList<>();
 	
 	static {
-		customers.add(new Customer(1, "John", "1234"));
-		customers.add(new Customer(2, "Mary", "5678"));
-		customers.add(new Customer(3, "Jack", "1111"));
-		customers.add(new Customer(4, "Rose", "2222"));
+		customers.add(new Customer(1, "John", "1234", "ADMIN"));
+		customers.add(new Customer(2, "Mary", "5678", "USER"));
+		customers.add(new Customer(3, "Jack", "1111", "USER"));
+		customers.add(new Customer(4, "Rose", "2222", "USER"));
 	}
 	
 	@Override
