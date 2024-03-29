@@ -5,6 +5,11 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.cart.model.dto.CustomerDto;
@@ -13,11 +18,14 @@ import com.example.cart.model.po.Customer;
 import com.example.cart.repository.CustomerDao;
 
 @Service
-public class CustomerService {
+public class CustomerService implements UserDetailsService {
 	
 	@Autowired
 	@Qualifier("InMemoryCustomer")
 	private CustomerDao customerDao;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
 	private ModelMapper modelMapper;
@@ -59,5 +67,19 @@ public class CustomerService {
 	
 	public Boolean updatePassword(Integer id, String encodedPassword) {
 		return customerDao.updatePassword(id, encodedPassword);
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		Customer customer = customerDao.getCustomerByUsername(username);
+		if(customer == null) {
+			throw new UsernameNotFoundException("User not found with username: " + username);
+		}
+		return User.builder()
+				.username(customer.getUsername())
+				.password(passwordEncoder.encode(customer.getPassword())) // 若密碼未加密, 須加密
+				.roles(customer.getRole())
+				.build();
+
 	}
 }

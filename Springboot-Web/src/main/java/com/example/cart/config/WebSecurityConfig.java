@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -43,35 +44,9 @@ public class WebSecurityConfig {
 		return http.build(); // 建立安全過濾器鏈
 	}
 	
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-	
-	@Bean
-	public UserDetailsService userDetailsService(PasswordEncoder encoder) {
-		// 使用者集合
-		Collection<UserDetails> users = new ArrayList<>();
-		// 將每一個 customer 轉成 UserDetails, 並放入到 users 中
-		customerService.findAllCustomers().forEach(customer -> {
-			UserDetails user = User.builder()
-					.username(customer.getUsername())
-					.password(encoder.encode(customer.getPassword())) // 加密
-					//.roles("USER") // 角色:一般使用者
-					.roles(customer.getRole())
-					.build();
-			users.add(user); // 加入到集合
-		});
-		
-		// 另外增加一個 user
-		UserDetails admin = User.builder()
-				.username("admin")
-				.password(encoder.encode("1234"))
-				.roles("ADMIN") // 角色:管理者
-				.build();
-		users.add(admin); // 加入到集合
-		
-		return new InMemoryUserDetailsManager(users);
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(customerService);
 	}
 	
 }
