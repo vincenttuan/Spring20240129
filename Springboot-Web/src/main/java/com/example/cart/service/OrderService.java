@@ -152,7 +152,13 @@ public class OrderService {
 	
 	// 刪除訂單
 	public Boolean deleteOrder(Integer orderId) {
-		return orderDao.deleteOrder(orderId);
+		// 取出該筆訂單所有的項目
+		List<Item> items = orderDao.getItemsByOrderId(orderId);
+		// 刪除該筆訂單所有的項目
+		items.forEach(item -> deleteOrderItem(item.getId()));
+		// 刪除該筆訂單主檔
+		Boolean status = orderDao.deleteOrder(orderId);
+		return status;
 	}
 	
 	// 刪除訂單項目
