@@ -57,7 +57,8 @@ public class WebSecurityConfig {
 			UserDetails user = User.builder()
 					.username(customer.getUsername())
 					.password(encoder.encode(customer.getPassword())) // 加密
-					.roles("USER") // 角色:一般使用者 
+					//.roles("USER") // 角色:一般使用者
+					.roles(customer.getRole())
 					.build();
 			users.add(user); // 加入到集合
 		});
