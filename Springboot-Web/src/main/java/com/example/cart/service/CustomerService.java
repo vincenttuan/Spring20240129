@@ -65,7 +65,9 @@ public class CustomerService implements UserDetailsService {
 		return modelMapper.map(customer, CustomerDto.class);
 	}
 	
-	public Boolean updatePassword(Integer id, String encodedPassword) {
+	public Boolean updatePassword(Integer id, String newPassword) {
+		// 將新密碼加密
+		String encodedPassword = passwordEncoder.encode(newPassword);
 		return customerDao.updatePassword(id, encodedPassword);
 	}
 	
