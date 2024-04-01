@@ -10,9 +10,19 @@ import java.util.Map;
 // 將 data.csv 轉 List<Map<String, String>>
 public class CSVReader {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
+		String filePath = "C:\\Users\\student\\Documents\\workspace-spring\\SpringCore\\src\\com\\spring\\core\\lab\\data.csv";
+		List<Map<String, String>> dataList = readCsv(filePath);
+		// 印出
+		System.out.println(dataList.size());
+		//dataList.forEach(data -> System.out.println(data));
 		
-
+		System.out.println("及格");
+		dataList.stream().filter(map -> Double.parseDouble(map.get("score")) >= 60).forEach(System.out::println);
+		
+		System.out.println("不及格");
+		dataList.stream().filter(map -> Double.parseDouble(map.get("score")) < 60).forEach(System.out::println);
+		
 	}
 	
 	public static List<Map<String, String>> readCsv(String filePath) throws Exception {
