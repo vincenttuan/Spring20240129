@@ -60,8 +60,9 @@ public class ProductDaoInMySQL implements ProductDao {
 
 	@Override
 	public Product updateProduct(Product product) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "update product set name=?, cost=?, price=?, qty=? where id=?";
+		int rowcount = jdbcTemplate.update(sql, product.getName(), product.getCost(), product.getPrice(), product.getQty(), product.getId());
+		return product;
 	}
 
 	@Override
