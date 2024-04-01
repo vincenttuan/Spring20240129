@@ -100,8 +100,10 @@ public class OrderDaoInMySQL implements OrderDao {
         }
 
         String deleteSql = "DELETE FROM `Item` WHERE orderId = ? AND productId = ? AND amount = 0";
-        jdbcTemplate.update(deleteSql, orderId, productId); // 若數量為 0，則刪除該項目
-
+        int rowcount = jdbcTemplate.update(deleteSql, orderId, productId); // 若數量為 0，則刪除該項目
+        if(rowcount > 0) {
+        	return null;
+        }
         String selectSql = "SELECT * FROM `Item` WHERE orderId = ? AND productId = ?";
         return jdbcTemplate.queryForObject(selectSql, itemRowMapper, orderId, productId); // 返回更新後的項目
     }
