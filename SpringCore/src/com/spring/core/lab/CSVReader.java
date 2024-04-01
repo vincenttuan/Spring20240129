@@ -9,6 +9,8 @@ import java.util.Map;
 
 // 將 data.csv 轉 List<Map<String, String>>
 public class CSVReader {
+	
+	private static final String SPLIT_SYMBOL = ","; // csv 分隔符號
 
 	public static void main(String[] args) throws Exception {
 		String filePath = "src/com/spring/core/lab/data.csv";
@@ -35,12 +37,12 @@ public class CSVReader {
 		}
 		
 		// 將第二行(.get(1))作為標題
-		String[] keys = allLines.get(1).split(",");
+		String[] keys = allLines.get(1).split(SPLIT_SYMBOL);
 		
 		// 從第三行開始遍歷讀取資料
 		for(int i=2;i<allLines.size();i++) {
 			// 分割每一行的數據
-			String[] values = allLines.get(i).split(",");
+			String[] values = allLines.get(i).split(SPLIT_SYMBOL);
 			// 準備一個 Map 容器存放資料
 			Map<String, String> rowMap = new LinkedHashMap<>();
 			for(int j=0;j<keys.length;j++) {
