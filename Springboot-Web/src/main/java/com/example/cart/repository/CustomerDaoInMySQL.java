@@ -76,8 +76,9 @@ public class CustomerDaoInMySQL implements CustomerDao {
 
 	@Override
 	public Boolean deleteCustomerById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "delete from customer where id = ?";
+		int rowcount = jdbcTemplate.update(sql, id);
+		return rowcount > 0;
 	}
 
 	@Override
