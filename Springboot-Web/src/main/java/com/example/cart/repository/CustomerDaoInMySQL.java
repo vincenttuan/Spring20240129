@@ -83,8 +83,9 @@ public class CustomerDaoInMySQL implements CustomerDao {
 
 	@Override
 	public Boolean updatePassword(Integer id, String encodedPassword) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "update customer set password = ? where id = ?";
+		int rowcount = jdbcTemplate.update(sql, encodedPassword, id);
+		return rowcount > 0;
 	}
 	
 	
