@@ -88,8 +88,16 @@ public class ProductDaoInMySQL implements ProductDao {
 
 	@Override
 	public Boolean deleteProductById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "delete from product where id = ?";
+		
+		try {
+			int rowcount = jdbcTemplate.update(sql, id);
+			return rowcount > 0;
+		} catch (Exception e) { // 若關聯存在則無法刪除
+			e.printStackTrace();
+			return false;
+		}
+		
 	}
 
 }
