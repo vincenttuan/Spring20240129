@@ -36,8 +36,15 @@ public class CustomerDaoInMySQL implements CustomerDao {
 
 	@Override
 	public Customer getCustomerById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "select id, username, password, role from customer where id = ?";
+		try {
+			// 使用 queryForObject 查詢單筆資料, 若沒有查到會拋出例外
+			Customer customer = jdbcTemplate.queryForObject(sql, customerRowMapper, id);
+			return customer;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
