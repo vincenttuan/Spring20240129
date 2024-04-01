@@ -21,7 +21,8 @@ import com.example.cart.repository.CustomerDao;
 public class CustomerService implements UserDetailsService {
 	
 	@Autowired
-	@Qualifier("InMemoryCustomer")
+	//@Qualifier("InMemoryCustomer")
+	@Qualifier("InMySQLCustomer")
 	private CustomerDao customerDao;
 	
 	@Autowired

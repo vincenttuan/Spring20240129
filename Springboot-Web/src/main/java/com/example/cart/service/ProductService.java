@@ -15,11 +15,13 @@ import com.example.cart.repository.ProductDao;
 @Service
 public class ProductService {
 	@Autowired
-	@Qualifier("InMemoryProduct")
+	//@Qualifier("InMemoryProduct")
+	@Qualifier("InMySQLProduct")
 	private ProductDao productDao;
 	
 	@Autowired
-	@Qualifier("InMemoryOrder")
+	//@Qualifier("InMemoryOrder")
+	@Qualifier("InMySQLOrder")
 	private OrderDao orderDao;
 	
 	@Autowired

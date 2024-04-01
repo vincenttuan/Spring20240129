@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.example.cart.model.dto.CustomerDto;
@@ -25,9 +26,13 @@ import com.example.cart.repository.ProductDao;
 @Service
 public class OrderService {
 	@Autowired
+	//@Qualifier("InMemoryOrder")
+	@Qualifier("InMySQLOrder")
 	private OrderDao orderDao;
 	
 	@Autowired
+	//@Qualifier("InMemoryProduct")
+	@Qualifier("InMySQLProduct")
 	private ProductDao productDao;
 	
 	@Autowired
