@@ -1,4 +1,45 @@
 const REMOTE_URL = 'http://localhost:8080';
+
+const $ = (id) => document.getElementById(id);
+
+// 通用函數，用於檢查事件目標是否包含指定的類別，如果是則執行回調函數
+const handleEvent = async (event, className, callback) => {
+    if (event.target.classList.contains(className)) {
+		var itemId, productId, amount, customerId;
+		switch(className) {
+			case 'products-add': // 新增產品
+				await callback();
+				break;
+			case 'delete-product-button': // 刪除客戶
+				productId = event.target.getAttribute('data-id');
+				await callback(productId);
+				break;
+			case 'update-product-button': // 修改產品
+				productId = event.target.getAttribute('data-id');
+				await callback(productId);
+				break;
+			case 'delete-item-product-button': // 刪除訂單商品
+				itemId = event.target.getAttribute('data-id');
+		        productId = event.target.getAttribute('data-product-id');
+		        await callback(itemId, productId);
+				break;
+			case 'customers-add': // 新增客戶
+				await callback();
+				break;
+			case 'change-customer-password-button': // 更新客戶密碼
+			case 'update-customer-button': // 修改客戶
+			case 'delete-customer-button': // 刪除客戶
+				customerId = event.target.getAttribute('data-id');
+				await callback(customerId);
+				break;	
+			default:
+				productId = event.target.getAttribute('data-id');
+		        amount = event.target.getAttribute('data-amount');
+		        await callback(productId, amount);
+		}
+    }
+};
+
 // 使用解構賦值和模板字符串來簡化代碼
 const fetchAndRenderData = async (url, containerId, renderFn) => {
 	url = REMOTE_URL + url;
@@ -22,6 +63,67 @@ const fetchAndRenderData = async (url, containerId, renderFn) => {
     }
 };
 
+// 通用刪除
+// 使用 Swal.fire 跳出 yes/no 彈窗來決定是否要刪除
+const handleDelete = async (fullUrl, fetchAndRender) => {
+	const result = await Swal.fire({
+		title: '確定要刪除嗎?',
+		text: "刪除後將無法恢復!",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonText: '是的，刪除它!',
+		cancelButtonText: '取消'
+	});
+	if (result.isConfirmed) {
+		console.log('Confirmed');
+	} else {
+		console.log('Cancelled');
+		return;
+	}
+
+	// 進行遠端刪除
+	// delete fullUrl
+	try {
+		const response = await fetch(fullUrl, { method: 'DELETE' });
+		if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+		const { status, message } = await response.json();
+		if (!status) throw new Error(`Failed to delete: ${message}`);
+		// 重新渲染列表
+		//fetchAndRenderData('/customers', 'customers-body', renderCustomer);
+		fetchAndRender();
+	} catch (error) {
+		console.error('Delete error', fullUrl, error);
+		// Swal.fire dialog
+		Swal.fire({
+			title: '刪除失敗!',
+			text: error,
+			icon: 'error',
+			confirmButtonText: '確定'
+		});
+	}
+};
+
+
+
+//-----------------------------------------------------------------------------------------------------------
+
+// 使用解構賦值簡化 logout 函數
+const logout = () => window.location.href = '/logout';
+
+// 定義一個異步函數來加載 HTML 內容
+const loadHTML = async (url, containerId) => {
+	const fullUrl = REMOTE_URL + url;
+    try {
+        const response = await fetch(fullUrl); // 等待 fetch 请求完成
+        const data = await response.text(); // 等待响应的文本内容
+        $(containerId).innerHTML = data; // 将加载的 HTML 内容设置到指定的容器中
+    } catch (error) {
+        console.error('Error loading the content:', error); // 处理可能的错误
+    }
+};
+
+//-----------------------------------------------------------------------------------------------------------
+
 const renderUsername = ({username}) => `${username}`;
 
 // 渲染產品列表的函數
@@ -32,17 +134,21 @@ const renderProduct = ({ id, name, cost, price, qty }) => `
         <td>${cost}</td>
         <td>${price}</td>
         <td>${qty}</td>
-        <td><span class="button-add pure-button buy-product-button" data-id="${id}" data-amount="1">B</span></td>
-        <td><span class="button-delete pure-button delete-product-button" data-id="${id}">刪</span></td>
+        <td title='買進'><span class="button-add pure-button buy-product-button" data-id="${id}" data-amount="1">買</span></td>
+        <td title='修改'><span class="button-update pure-button update-product-button" data-id="${id}">修改</span></td>
+        <td title='刪除'><span class="button-delete pure-button delete-product-button" data-id="${id}">刪除</span></td>
     </tr>`;
 
 // 渲染客戶列表的函數
-const renderCustomer = ({ id, username, password }) => `
+const renderCustomer = ({ id, role, username, password }) => `
     <tr>
         <td>${id}</td>
+        <td>${role}</td>
         <td>${username}</td>
-        <td title='${password}'>${password.substring(0, 23)}...</td>
-        <td title='變更密碼'><span class="button-update pure-button update-customer-password-button" data-id="${id}">修改</span></td>
+        <td title='${password}'>${password.substring(0, 10)}..</td>
+        <td title='變更密碼'><span class="button-change pure-button change-customer-password-button" data-id="${id}">變更</span></td>
+        <td title='修改'><span class="button-update pure-button update-customer-button" data-id="${id}">修改</span></td>
+        <td title='刪除'><span class="button-delete pure-button delete-customer-button" data-id="${id}">刪除</span></td>
     </tr>`;
 
 // 渲染訂單列表的函數
@@ -55,7 +161,7 @@ const renderOrder = ({ id, date, customerDto, total, updatable, itemDtos }) => {
     // 根據 updatable 的值動態決定是否添加 hide 類別
     const adjustColumnClass = updatable ? '' : 'hide';
     
-    const deleteOrderButton = updatable ? `未結帳(可修改或刪除)<span class="button-delete pure-button delete-order-button" data-id="${id}">刪除訂單</span>` : '已結帳';
+    const deleteOrderButton = updatable ? `未結帳&nbsp;<span class="button-delete pure-button delete-order-button" data-id="${id}">刪除訂單</span>` : '已結帳';
     // 将 orderItemsHtml 嵌入到最终的 HTML 结构中
     return `
         <tr>
@@ -71,12 +177,12 @@ const renderOrder = ({ id, date, customerDto, total, updatable, itemDtos }) => {
                 <table class="pure-table custom-table">
                 	<thead>
                 	<tr>
-                        <th>Id</th>
-                        <th>商品名稱</th>
-                        <th>價格</th>
-                        <th>數量</th>
-                        <th class="${adjustColumnClass}">數量調整</th>
-                        <th>小計</th>
+                        <th align="center">Id</th>
+                        <th align="center">商品名稱</th>
+                        <th align="center">價格</th>
+                        <th align="center">數量</th>
+                        <th align="center" class="${adjustColumnClass}">數量調整</th>
+                        <th align="center">小計</th>
                     </tr>
                     </thead>
                     <tbody id="orders-items-table">
@@ -110,24 +216,45 @@ const renderOrderItem = ({ id, orderId, productDto, amount, updatable }) => {
     `;
 };
     
-// 使用解構賦值簡化 logout 函數
-const logout = () => window.location.href = '/logout';
-
-// 定義一個異步函數來加載 HTML 內容
-const loadHTML = async (url, containerId) => {
-	const fullUrl = REMOTE_URL + url;
-    try {
-        const response = await fetch(fullUrl); // 等待 fetch 请求完成
-        const data = await response.text(); // 等待响应的文本内容
-        $(containerId).innerHTML = data; // 将加载的 HTML 内容设置到指定的容器中
-    } catch (error) {
-        console.error('Error loading the content:', error); // 处理可能的错误
-    }
-};
-
 // -- products ------------------------------------------------------ 
 // 新增商品的函數
-const addProduct = async () => {
+const handleAddProduct = async () => {
+	// 使用 Swal.fire
+	const result = await Swal.fire({
+		title: '新增產品',
+		html: `
+            <input id="product-name-input" class="swal2-input" placeholder="請輸入商品名稱">
+            <input id="product-cost-input" type="number" class="swal2-input" placeholder="請輸入成本">
+            <input id="product-price-input" type="number" class="swal2-input" placeholder="請輸入價格">
+            <input id="product-qty-input" type="number" class="swal2-input" placeholder="請輸入數量">`,
+		focusConfirm: false,
+		preConfirm: () => {
+			const name = $('product-name-input').value;
+			const cost = $('product-cost-input').value;
+			const price = $('product-price-input').value;
+			const qty = $('product-qty-input').value;
+
+			// 檢查輸入值，如果需要的話
+			if (!name || !cost || !price || !qty) {
+				Swal.showValidationMessage("所有欄位都是必填的");
+				return false; // 阻止彈窗關閉
+			}
+
+			return { name, cost, price, qty };
+		}
+	});
+	
+	if (result.value) {
+		console.log(result.value);
+		console.log('Name:', result.value.name);
+		console.log('Cost:', result.value.cost);
+		console.log('Price:', result.value.price);
+		console.log('Qty:', result.value.qty);
+	} else {
+		console.log('No values');
+		return;
+	}
+	
 	// post http://localhost:8080/products
 	const fullUrl = `${REMOTE_URL}/products`;
 	try {
@@ -137,10 +264,10 @@ const addProduct = async () => {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				name: $('product-name-input').value,
-				cost: $('product-cost-input').value,
-				price: $('product-price-input').value,
-				qty: $('product-qty-input').value,
+				name: result.value.name,
+				cost: result.value.cost,
+				price: result.value.price,
+				qty: result.value.qty,
 			})
 		});
 		if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
@@ -153,69 +280,79 @@ const addProduct = async () => {
 	}
 };
 
-// 通用函數，用於檢查事件目標是否包含指定的類別，如果是則執行回調函數
-const handleEvent = async (event, className, callback) => {
-    if (event.target.classList.contains(className)) {
-		var itemId, productId, amount, customerId;
-		switch(className) {
-			case 'delete-item-product-button': // 刪除訂單商品
-				itemId = event.target.getAttribute('data-id');
-		        productId = event.target.getAttribute('data-product-id');
-		        await callback(itemId, productId);
-				break;
-			case 'update-customer-password-button': // 更新客戶密碼
-				customerId = event.target.getAttribute('data-id');
-				await callback(customerId);
-				break;	
-			default:
-				productId = event.target.getAttribute('data-id');
-		        amount = event.target.getAttribute('data-amount');
-		        await callback(productId, amount);
-		}
-    }
-};
+const handleUpdateProduct = async (productId) => {
+	// http://localhost:8080/products/1 取得 product
+	const getProductUrl = `${REMOTE_URL}/products/${productId}`;
+	const productResponse = await fetch(getProductUrl);
+	const { status, message, data } = await productResponse.json();
+	console.log(status, message, data);
+	
+	// Swal.fire Form-UI
+	const result = await Swal.fire({
+		title: '修改產品',
+		html: `
+            <input id="product-name-input" class="swal2-input" placeholder="請輸入商品名稱" value="${data.name}">
+            <input id="product-cost-input" type="number" class="swal2-input" placeholder="請輸入成本" value="${data.cost}">
+            <input id="product-price-input" type="number" class="swal2-input" placeholder="請輸入價格" value="${data.price}">
+            <input id="product-qty-input" type="number" class="swal2-input" placeholder="請輸入數量" value="${data.qty}">`,
+		focusConfirm: false,
+		preConfirm: () => {
+			const name = $('product-name-input').value;
+			const cost = $('product-cost-input').value;
+			const price = $('product-price-input').value;
+			const qty = $('product-qty-input').value;
 
-// 處理刪除訂單的異步邏輯
-const handleDeleteOrder = async (orderId) => {
-	const fullUrl = `${REMOTE_URL}/orders/${orderId}`;
+			// 檢查輸入值，如果需要的話
+			if (!name || !cost || !price || !qty) {
+				Swal.showValidationMessage("所有欄位都是必填的");
+				return false; // 阻止彈窗關閉
+			}
+
+			return { name, cost, price, qty };
+		}
+	});
+	
+	if (result.value) {
+		console.log(result.value);
+		console.log('Name:', result.value.name);
+		console.log('Cost:', result.value.cost);
+		console.log('Price:', result.value.price);
+		console.log('Qty:', result.value.qty);
+	} else {
+		console.log('No values');
+		return;
+	}
+	
+	// put http://localhost:8080/products/1
+	const fullUrl = `${REMOTE_URL}/products/${productId}`;
 	try {
 		const response = await fetch(fullUrl, {
-			method: 'DELETE'
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				name: result.value.name,
+				cost: result.value.cost,
+				price: result.value.price,
+				qty: result.value.qty
+			})
 		});
 		if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 		const { status, message } = await response.json();
-		console.log(status, message);
-		if (!status) throw new Error(`Failed to delete order: ${message}`);
-		// 重新渲染訂單列表
-		reDisplayOrders();
+		if (!status) throw new Error(`Failed to update product: ${message}`);
 		// 重新渲染產品列表
 		fetchAndRenderData('/products', 'products-body', renderProduct);
-		
 	} catch (error) {
-		console.error('Error deleting order:', error);
+		console.error('Error updating product:', error);
 	}
+	  
 };
 
-// 處理刪除訂單商品的異步邏輯
-const handleDeleteOrderItemProduct = async(itemId, productId) => {
-	const fullUrl = `${REMOTE_URL}/orders/item/${itemId}`;
-	try {
-		const response = await fetch(fullUrl, {
-			method: 'DELETE'
-		});
-		if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-		const { status, message, data } = await response.json();
-		console.log(status, message);
-		//const productQty = data.itemDtos.find(item => item.productDto.id === productId)?.qty;
-		if (!status) throw new Error(`Failed to buy product: ${message}`);
-		// 重新渲染訂單列表
-		reDisplayOrders();
-		// 更新單一產品列表
-		updateProductQty(productId);
-		
-	} catch (error) {
-		console.error('Error buying product:', error);
-	}
+// 處理刪除產品的異步邏輯
+const handleDeleteProduct = async (productId) => {
+	// 處理刪除客戶的異步邏輯
+	handleDelete(`${REMOTE_URL}/products/${productId}`, () => fetchAndRenderData('/products', 'products-body', renderProduct));  
 };
 
 // 處理購買產品的異步邏輯
@@ -241,7 +378,7 @@ const handleBuyProduct = async (productId, amount) => {
 		//const productQty = data.itemDtos.find(item => item.productDto.id === productId)?.qty;
 		if (!status) throw new Error(`Failed to buy product: ${message}`);
 		// 重新渲染訂單列表
-		reDisplayOrders();
+		fetchAndRenderOrderData();
 		// 更新單一產品列表
 		updateProductQty(productId);
 		
@@ -251,31 +388,46 @@ const handleBuyProduct = async (productId, amount) => {
     
 };
 
-// 處理刪除產品的異步邏輯
-const handleDeleteProduct = async (productId) => {
-    console.log('刪除產品 ID:', productId);
-    // 在這裡添加異步處理刪除產品的代碼
-    // http-method:delete http://localhost:8080/products/1
-    const fullUrl = `${REMOTE_URL}/products/${productId}`;
-	try {
-		const response = await fetch(fullUrl, {
-			method: 'DELETE'
-		});
-		if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-		const { status, message } = await response.json();
-		console.log(status, message);
-		if (!status) throw new Error(`Failed to delete product: ${message}`);
-		// 重新渲染產品列表
-		fetchAndRenderData('/products', 'products-body', renderProduct);
-	} catch (error) {
-		console.error('Error deleting product:', error);
-	}
-};
-
-// -- customers ------------------------------------------------------ 
-
+// -- customers -------------------------------------------------------------------------------- 
 // 新增客戶的函數
-const addCustomer = async () => {
+const handleAddCustomer = async () => {
+	
+	// 使用 Swal.fire
+	const result = await Swal.fire({
+	    title: '新增客戶',
+	    html:`
+	        <select id="customer-role-select" class="swal2-input">
+	        	<option value="USER">ROLE_USER</option>
+	        	<option value="ADMIN">ROLE_ADMIN</option>
+	        </select>
+	        <input id="customer-username-input" class="swal2-input" placeholder="請輸入用戶名稱">
+	        <input id="customer-password-input" type="password" class="swal2-input" placeholder="請輸入密碼">`,
+	    focusConfirm: false,
+	    preConfirm: () => {
+	        const role = document.getElementById('customer-role-select').value;
+	        const username = document.getElementById('customer-username-input').value;
+	        const password = document.getElementById('customer-password-input').value;
+	        
+	        // 檢查輸入值，如果需要的話
+	        if (!role || !username || !password) {
+	            Swal.showValidationMessage("所有欄位都是必填的");
+	            return false; // 阻止彈窗關閉
+	        }
+	
+	        return { role, username, password };
+	    }
+	});
+	
+	if (result.value) {
+		console.log(result.value);
+	    console.log('Role:', result.value.role);
+	    console.log('Username:', result.value.username);
+	    console.log('Password:', result.value.password);
+	} else {
+	    console.log('No values');
+	    return;
+	}
+	
 	// post http://localhost:8080/customers
 	const fullUrl = `${REMOTE_URL}/customers`;
 	try {
@@ -285,14 +437,15 @@ const addCustomer = async () => {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				username: $('customer-username-input').value,
-				password: $('customer-password-input').value
+				role: result.value.role,
+				username: result.value.username,
+				password: result.value.password
 			})
 		});
 		if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 		const { status, message } = await response.json();
 		if (!status) throw new Error(`Failed to add customer: ${message}`);
-		// 重新渲染產品列表
+		// 重新渲染客戶列表
 		fetchAndRenderData('/customers', 'customers-body', renderCustomer);
 	} catch (error) {
 		console.error('Error adding customer:', error);
@@ -356,22 +509,81 @@ const handleUpdateCustomerPassword = async (customerId) => {
 	}
 };
 
+// 處理修改客戶的異步邏輯
+const handleUpdateCustomer = async (customerId) => {
+	const getCustomerUrl = `${REMOTE_URL}/customers/${customerId}`;
+	const customerResponse = await fetch(getCustomerUrl);
+	const { status, message, data } = await customerResponse.json();
+	console.log(status, message, data);
+	
+	// 使用 Swal.fire 白底彈窗請求修改用戶
+	const result = await Swal.fire({
+		title: '修改客戶',
+		html: `
+            <select id="customer-role-select" class="swal2-input">
+            	<option value="USER" ${data.role=="USER"?"selected":""}>ROLE_USER</option>
+            	<option value="ADMIN" ${data.role=="ADMIN"?"selected":""}>ROLE_ADMIN</option>
+            </select>
+            <input id="customer-username-input" class="swal2-input" placeholder="請輸入用戶名稱" value="${data.username}">`,
+		focusConfirm: false,
+		preConfirm: () => {
+			const role = document.getElementById('customer-role-select').value;
+			const username = document.getElementById('customer-username-input').value;
+
+			// 檢查輸入值，如果需要的話
+			if (!role || !username) {
+				Swal.showValidationMessage("所有欄位都是必填的");
+				return false; // 阻止彈窗關閉
+			}
+
+			return { role, username};
+		}
+	});
+	
+	if (result.value) {
+		console.log(result.value);
+		console.log('Role:', result.value.role);
+		console.log('Username:', result.value.username);
+	} else {
+		console.log('No values');
+		return;
+	}
+	
+	// 進行遠端修改
+	// put http://localhost:8080/customers/1
+	const fullUrl = `${REMOTE_URL}/customers/${customerId}`;
+	try {
+		const response = await fetch(fullUrl, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				role: result.value.role,
+				username: result.value.username
+			})
+		});
+		if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+		const { status, message } = await response.json();
+		if (!status) throw new Error(`Failed to add customer: ${message}`);
+		// 重新渲染客戶列表
+		fetchAndRenderData('/customers', 'customers-body', renderCustomer);
+	} catch (error) {
+		console.error('Error adding customer:', error);
+	}
+	
+};
+
+// 處理刪除客戶的異步邏輯
+const handleDeleteCustomer = async (customerId) => {
+	handleDelete(`${REMOTE_URL}/customers/${customerId}`, () => fetchAndRenderData('/customers', 'customers-body', renderCustomer));
+};
+
 // -- orders ------------------------------------------------------ 
 
-const reDisplayOrders = () => {
+const fetchAndRenderOrderData = () => {
 	fetchAndRenderData('/orders/customer/history', 'orders-body-history', renderOrder);
 	fetchAndRenderData('/orders/customer/today', 'orders-body-today', renderOrder);
-	
-	$("orders-today-link").addEventListener("click", (event) => {
-		event.preventDefault();  // 取消默認動作，這裡是阻止超鏈接跳轉
-		$("orders-body-today").style.display = "";
-		$("orders-body-history").style.display = 'none';
-	});
-	$("orders-history-link").addEventListener("click", (event) => {
-		event.preventDefault();  // 取消默認動作，這裡是阻止超鏈接跳轉
-		$("orders-body-today").style.display = 'none';
-		$("orders-body-history").style.display = "";
-	});
 };
 
 const updateProductQty = async (productId) => {
@@ -395,9 +607,39 @@ const updateProductQty = async (productId) => {
     });
 };
 
+// 處理刪除訂單的異步邏輯
+const handleDeleteOrder = async (orderId) => {
+	
+	handleDelete(`${REMOTE_URL}/orders/${orderId}`, () => {
+		fetchAndRenderOrderData(); 
+		fetchAndRenderData('/products', 'products-body', renderProduct);
+	});
+	
+};
 
-const $ = (id) => document.getElementById(id);
+// 處理刪除訂單商品的異步邏輯
+const handleDeleteOrderItemProduct = async(itemId, productId) => {
+	const fullUrl = `${REMOTE_URL}/orders/item/${itemId}`;
+	try {
+		const response = await fetch(fullUrl, {
+			method: 'DELETE'
+		});
+		if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+		const { status, message, data } = await response.json();
+		console.log(status, message);
+		//const productQty = data.itemDtos.find(item => item.productDto.id === productId)?.qty;
+		if (!status) throw new Error(`Failed to buy product: ${message}`);
+		// 重新渲染訂單列表
+		fetchAndRenderOrderData();
+		// 更新單一產品列表
+		updateProductQty(productId);
+		
+	} catch (error) {
+		console.error('Error buying product:', error);
+	}
+};
 
+//-----------------------------------------------------------------------------------------------------
 // 等待 DOM 加載完成後再執行
 document.addEventListener("DOMContentLoaded", async () => {
     
@@ -410,53 +652,42 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 載入 orders-list.html 到 orders-container
     await loadHTML('/orders-list.html', 'orders-container');
     
-    // 渲染產品和客戶列表
+    // 渲染資料
     fetchAndRenderData('/user/name', 'username', renderUsername);
     fetchAndRenderData('/products', 'products-body', renderProduct);
     fetchAndRenderData('/customers', 'customers-body', renderCustomer);
-    reDisplayOrders();
+    fetchAndRenderOrderData();
     
     // 下面的方法會等待所有的 HTML 加載完成後再執行
     $("logout").addEventListener("click", logout);
     
     // products ------------------------------------------------------
-    $("products-add-submit").addEventListener("click", addProduct);
-    $("products-add-table").style.display = "none";
-	$("products-list-link").addEventListener("click", (event) => {
+    $("products-add-link").addEventListener("click", async (event) => {
 		event.preventDefault();  // 取消默認動作，這裡是阻止超鏈接跳轉
-		$("products-list-table").style.display = "table";
-		$("products-add-table").style.display = "none";
-	});
-	$("products-add-link").addEventListener("click", (event) => {
-		event.preventDefault();  // 取消默認動作，這裡是阻止超鏈接跳轉
-		$("products-list-table").style.display = "none";
-		$("products-add-table").style.display = "table";
+		console.log(event.target);
+		await handleEvent(event, 'products-add', handleAddProduct);
 	});
 	
 	$('products-list-table').addEventListener('click', async (event) => {
 	    // 使用通用函數處理事件
 	    await handleEvent(event, 'buy-product-button', handleBuyProduct);
+	    await handleEvent(event, 'update-product-button', handleUpdateProduct);
 	    await handleEvent(event, 'delete-product-button', handleDeleteProduct);
 	});
 	
 	// customers ------------------------------------------------------
-	$("customers-add-submit").addEventListener("click", addCustomer);
-	$("customers-add-table").style.display = "none";
-	$("customers-list-link").addEventListener("click", (event) => {
+	$("customers-add-link").addEventListener("click", async (event) => {
 		event.preventDefault();  // 取消默認動作，這裡是阻止超鏈接跳轉
-		$("customers-list-table").style.display = "table";
-		$("customers-add-table").style.display = "none";
-	});
-	$("customers-add-link").addEventListener("click", (event) => {
-		event.preventDefault();  // 取消默認動作，這裡是阻止超鏈接跳轉
-		$("customers-list-table").style.display = "none";
-		$("customers-add-table").style.display = "table";
+		console.log(event.target);
+		await handleEvent(event, 'customers-add', handleAddCustomer);
 	});
 	
 	$("customers-body").addEventListener("click", async (event) => {
 		event.preventDefault();  // 取消默認動作，這裡是阻止超鏈接跳轉
 		console.log(event.target);
-		await handleEvent(event, 'update-customer-password-button', handleUpdateCustomerPassword);
+		await handleEvent(event, 'change-customer-password-button', handleUpdateCustomerPassword);
+		await handleEvent(event, 'update-customer-button', handleUpdateCustomer);
+		await handleEvent(event, 'delete-customer-button', handleDeleteCustomer);
 	});
 	
 	// orders ------------------------------------------------------
@@ -491,5 +722,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 	
 	$("orders-body-history").style.display = "none";
 	
+	$("orders-today-link").addEventListener("click", (event) => {
+		event.preventDefault();  // 取消默認動作，這裡是阻止超鏈接跳轉
+		$("orders-body-today").style.display = "";
+		$("orders-body-history").style.display = 'none';
+	});
+	$("orders-history-link").addEventListener("click", (event) => {
+		event.preventDefault();  // 取消默認動作，這裡是阻止超鏈接跳轉
+		$("orders-body-today").style.display = 'none';
+		$("orders-body-history").style.display = "";
+	});
 		
 });

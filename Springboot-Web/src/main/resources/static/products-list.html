@@ -1,48 +1,25 @@
 <form id="products-list" class="pure-form">
 	<fieldset>
 		<legend>
-			Product 
-			<a id="products-list-link" href="">List</a>｜
-			<a id="products-add-link" href="">Add</a>
+			Product&nbsp;|&nbsp;
+			<a id="products-add-link" class="products-add" href="">Add</a>
 		</legend>
 		<table id="products-list-table" class="pure-table pure-table-bordered">
 			<thead>
 				<tr>
-					<th>Id</th>
-					<th>Name</th>
-					<th>Cost</th>
-					<th>Price</th>
-					<th>Qty</th>
-					<th>Buy</th>
-					<th>Delete</th>
+					<th align="center">Id</th>
+					<th align="center">Name</th>
+					<th align="center">Cost</th>
+					<th align="center">Price</th>
+					<th align="center">Qty</th>
+					<th align="center">Buy</th>
+					<th align="center">Update</th align="center">
+					<th align="center">Delete</th align="center">
 				</tr>
 			</thead>
 			<tbody id="products-body">
 
 			</tbody>
-		</table>
-		<table id="products-add-table" class="pure-table pure-table-bordered" style="display: 'none'">
-			<tr>
-				<td>Name</td>
-				<td><input id="product-name-input" type="text" placeholder="請輸入 name"></td>
-			</tr>
-			<tr>
-				<td>Cost</td>
-				<td><input id="product-cost-input" type="number" placeholder="請輸入 cost" value="0"></td>
-				</tr>
-			<tr>
-                <td>Price</td>
-                <td><input id="product-price-input" type="number" placeholder="請輸入 price" value="0"></td>
-            </tr>
-            <tr>
-                <td>Qty</td>
-                <td><input id="product-qty-input" type="number" placeholder="請輸入 qty" value="0"></td>
-            </tr>
-			<tr>
-				<td>
-					<span id="products-add-submit" class="pure-button">新增商品</span>
-				</td>
-			</tr>
 		</table>
 	</fieldset>
 </form>

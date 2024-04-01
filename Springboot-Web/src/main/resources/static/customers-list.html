@@ -1,36 +1,24 @@
 <form id="customers-list" class="pure-form">
 	<fieldset>
 		<legend>
-				Customer
-				<a id="customers-list-link" href="">List</a>｜
-				<a id="customers-add-link" href="">Add</a>
+			Customer&nbsp;|&nbsp;
+			<a id="customers-add-link" class="customers-add" href="">Add</a>
 		</legend>
 		<table id="customers-list-table" class="pure-table pure-table-bordered">
 			<thead>
 				<tr>
-					<th>Id</th>
-					<th>Name</th>
-					<th colspan="2">Password</th>
+					<th align="center">Id</th>
+					<th align="center">Role</th>
+					<th align="center">Name</th>
+					<th align="center" colspan="2">Password</th>
+					<th align="center">Update</th align="center">
+					<th align="center">Delete</th>
 				</tr>
 			</thead>
 			<tbody id="customers-body">
 
 			</tbody>
 		</table>
-		<table id="customers-add-table" class="pure-table pure-table-bordered" style="display: 'none'">
-			<tr>
-				<td>Username</td>
-				<td><input id="customer-username-input" type="text" placeholder="請輸入 username"></td>
-			</tr>
-			<tr>
-				<td>Password</td>
-				<td><input id="customer-password-input" type="text" placeholder="請輸入 password"></td>
-			</tr>
-			<tr>
-				<td>
-					<span id="customers-add-submit" class="pure-button">新增客戶</span>
-				</td>
-			</tr>
-		</table>
+		
 	</fieldset>
 </form>
