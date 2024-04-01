@@ -141,7 +141,7 @@ public class OrderDaoInMySQL implements OrderDao {
     // 根據客戶ID和日期獲取訂單
     @Override
     public Order getOrderByCustomerIdAndDate(Integer customerId, String date) {
-        String sql = "SELECT * FROM `Order` WHERE customerId = ? AND date = ?";
+        String sql = "SELECT id, date, customerId FROM `Order` WHERE customerId = ? AND date = ?";
         try {
             return jdbcTemplate.queryForObject(sql, orderRowMapper, customerId, date);
         } catch (Exception e) {
