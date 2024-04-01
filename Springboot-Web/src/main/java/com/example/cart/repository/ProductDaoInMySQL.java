@@ -62,7 +62,7 @@ public class ProductDaoInMySQL implements ProductDao {
 	public Product updateProduct(Product product) {
 		String sql = "update product set name=?, cost=?, price=?, qty=? where id=?";
 		int rowcount = jdbcTemplate.update(sql, product.getName(), product.getCost(), product.getPrice(), product.getQty(), product.getId());
-		return product;
+		return rowcount > 0 ? product : null;
 	}
 
 	@Override
