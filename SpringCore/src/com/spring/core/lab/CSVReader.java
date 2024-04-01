@@ -12,9 +12,9 @@ public class CSVReader {
 	
 	private static final String SPLIT_SYMBOL = ","; // csv 分隔符號
 	private static final int TITLE_ROW = 2; // title 起始行
-
+	private static final String filePath = "src/com/spring/core/lab/data.csv";
+	
 	public static void main(String[] args) throws Exception {
-		String filePath = "src/com/spring/core/lab/data.csv";
 		List<Map<String, String>> dataList = readCsv(filePath);
 		// 印出
 		System.out.println(dataList.size());
