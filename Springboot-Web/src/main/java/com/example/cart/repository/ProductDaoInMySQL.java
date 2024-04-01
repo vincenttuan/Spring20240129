@@ -1,11 +1,13 @@
 package com.example.cart.repository;
 
+import java.sql.PreparedStatement;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.example.cart.model.po.Product;
@@ -38,8 +40,22 @@ public class ProductDaoInMySQL implements ProductDao {
 
 	@Override
 	public Product addProduct(Product product) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "insert into product (name, cost, price, qty) values (?, ?, ?, ?)";
+		// 獲取自增 id 主鍵值
+		GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+		
+		jdbcTemplate.update(conn -> {
+			PreparedStatement ps = conn.prepareStatement(sql, new String[] {"id"}); // 主鍵名: id
+			ps.setString(1, product.getName());
+			ps.setInt(2, product.getCost());
+			ps.setInt(3, product.getPrice());
+			ps.setInt(4, product.getQty());
+			return ps;
+		}, keyHolder);
+		
+		// id 會放在 keyHolder 中
+		product.setId(keyHolder.getKey().intValue());
+		return product;
 	}
 
 	@Override
