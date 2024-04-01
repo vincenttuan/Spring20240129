@@ -34,21 +34,21 @@ public class OrderDaoInMySQL implements OrderDao {
     // 獲取所有訂單
     @Override
     public List<Order> getAllOrders() {
-        String sql = "SELECT * FROM `Order`";
+        String sql = "SELECT id, date, customerId FROM `Order`";
         return jdbcTemplate.query(sql, orderRowMapper);
     }
 
     // 根據客戶ID獲取訂單
     @Override
     public List<Order> getOrdersByCustomerId(Integer customerId) {
-        String sql = "SELECT * FROM `Order` WHERE customerId = ?";
+        String sql = "SELECT id, date, customerId FROM `Order` WHERE customerId = ?";
         return jdbcTemplate.query(sql, orderRowMapper, customerId);
     }
 
     // 根據訂單ID獲取單個訂單
     @Override
     public Order getOrderById(Integer orderId) {
-        String sql = "SELECT * FROM `Order` WHERE id = ?";
+        String sql = "SELECT id, date, customerId FROM `Order` WHERE id = ?";
         try {
             return jdbcTemplate.queryForObject(sql, orderRowMapper, orderId);
         } catch (Exception e) {
@@ -59,14 +59,14 @@ public class OrderDaoInMySQL implements OrderDao {
     // 根據項目ID獲取單個項目
     @Override
     public Item getItemById(Integer itemId) {
-        String sql = "SELECT * FROM `Item` WHERE id = ?";
+        String sql = "SELECT id, orderId, productId, amount FROM `Item` WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, itemRowMapper, itemId);
     }
 
     // 根據訂單ID獲取該訂單的所有項目
     @Override
     public List<Item> getItemsByOrderId(Integer orderId) {
-        String sql = "SELECT * FROM `Item` WHERE orderId = ?";
+        String sql = "SELECT id, orderId, productId, amount FROM `Item` WHERE orderId = ?";
         return jdbcTemplate.query(sql, itemRowMapper, orderId);
     }
 
