@@ -69,8 +69,9 @@ public class CustomerDaoInMySQL implements CustomerDao {
 
 	@Override
 	public Customer updateCustomer(Customer customer) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "update customer set username=?, password=?, role=? where id=?";
+		int rowcount = jdbcTemplate.update(sql, customer.getUsername(), customer.getPassword(), customer.getRole(), customer.getId());
+		return rowcount > 0 ? customer : null;
 	}
 
 	@Override
