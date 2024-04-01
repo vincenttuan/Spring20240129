@@ -11,7 +11,7 @@ import java.util.Map;
 public class CSVReader {
 
 	public static void main(String[] args) throws Exception {
-		String filePath = "C:\\Users\\student\\Documents\\workspace-spring\\SpringCore\\src\\com\\spring\\core\\lab\\data.csv";
+		String filePath = "src\\com\\spring\\core\\lab\\data.csv";
 		List<Map<String, String>> dataList = readCsv(filePath);
 		// 印出
 		System.out.println(dataList.size());
