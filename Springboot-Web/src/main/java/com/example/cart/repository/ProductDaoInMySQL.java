@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.cart.model.po.Product;
 
-@Repository("InMySQLproduct")
+@Repository("InMySQLProduct")
 public class ProductDaoInMySQL implements ProductDao {
 	
 	@Autowired
