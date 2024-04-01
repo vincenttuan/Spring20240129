@@ -47,6 +47,7 @@ public class CustomerDaoInMemory implements CustomerDao {
 		}
 		updateCustomer.setUsername(customer.getUsername());
 		updateCustomer.setPassword(customer.getPassword());
+		updateCustomer.setRole(customer.getRole());
 		return customer;
 	}
 

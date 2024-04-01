@@ -25,7 +25,7 @@ public class CustomerService implements UserDetailsService {
 	private CustomerDao customerDao;
 	
 	@Autowired
-	private PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 	
 	@Autowired
 	private ModelMapper modelMapper;
@@ -44,16 +44,35 @@ public class CustomerService implements UserDetailsService {
 	}
 	
 	public CustomerDto addCustomer(CustomerDto customerDto) {
+		// 密碼加密
+		String encodedPassword = passwordEncoder.encode(customerDto.getPassword());
+		customerDto.setPassword(encodedPassword);
+		
 		Customer customer = modelMapper.map(customerDto, Customer.class);
 		Customer savedCustomer = customerDao.addCustomer(customer);
 		return modelMapper.map(savedCustomer, CustomerDto.class);
 	}
 	
 	public CustomerDto updateCustomer(Integer id, CustomerDto customerDto) {
+		if (customerDto.getPassword() != null) {
+			// 密碼加密
+			String encodedPassword = passwordEncoder.encode(customerDto.getPassword());
+			customerDto.setPassword(encodedPassword);
+		} else {
+			// 取得 pwd
+			String pwd = customerDao.getCustomerById(id).getPassword();
+			customerDto.setPassword(pwd);
+		}
 		customerDto.setId(id);
 		Customer customer = modelMapper.map(customerDto, Customer.class);
 		Customer updatedCustomer = customerDao.updateCustomer(customer);
 		return modelMapper.map(updatedCustomer, CustomerDto.class);
+	}
+	
+	// 更新密碼
+	public Boolean updatePassword(Integer customerId, String newPassword) {
+		String encodedPassword = passwordEncoder.encode(newPassword);
+		return customerDao.updatePassword(customerId, encodedPassword);
 	}
 	
 	public Boolean deleteCustomerById(Integer id) {
@@ -65,25 +84,19 @@ public class CustomerService implements UserDetailsService {
 		return modelMapper.map(customer, CustomerDto.class);
 	}
 	
-	public Boolean updatePassword(Integer id, String newPassword) {
-		// 將新密碼加密
-		String encodedPassword = passwordEncoder.encode(newPassword);
-		return customerDao.updatePassword(id, encodedPassword);
-	}
-	
-	// spring-security 登入時會使用
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Customer customer = customerDao.getCustomerByUsername(username);
-		if(customer == null) {
-			throw new UsernameNotFoundException("User not found with username: " + username);
-		}
-		return User.builder()
-				.username(customer.getUsername())
-				//.password(passwordEncoder.encode(customer.getPassword())) // 若密碼未加密, 須加密
-				.password(customer.getPassword()) // 密碼已加密
-				.roles(customer.getRole())
-				.build();
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Customer customer = customerDao.getCustomerByUsername(username);
+        if (customer == null) {
+            throw new UsernameNotFoundException("User not found with username: " + username);
+        }
 
-	}
+        return User.builder()
+                .username(customer.getUsername())
+                //.password(passwordEncoder.encode(customer.getPassword())) // 密码未加密，需要加密
+                .password(customer.getPassword()) // 密码已经加密，不需要再加密
+                .roles("USER") // 根据实际情况设置用户角色
+                .build();
+    }
+	
 }
