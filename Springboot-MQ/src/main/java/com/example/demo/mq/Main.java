@@ -14,10 +14,11 @@ public class Main {
 		while (producer.getCoffeeStock() > 0) {
 			// 啟動執行緒生產咖啡
 			new Thread(producer).start();
-			Thread.sleep(2000); // delay 2 秒
+			Thread.sleep(1000); // delay 1 秒
 		}
 		
 		System.out.println("程式結束");
+		System.exit(0);
 	}
 
 }
