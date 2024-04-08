@@ -16,6 +16,8 @@ public class Main {
 			new Thread(producer).start();
 			Thread.sleep(2000); // delay 2 秒
 		}
+		
+		System.out.println("程式結束");
 	}
 
 }
