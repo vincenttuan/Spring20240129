@@ -1,5 +1,7 @@
 package com.example.demo.mq;
 
+import java.util.Scanner;
+
 public class Main {
 
 	public static void main(String[] args) throws InterruptedException {
@@ -12,9 +14,16 @@ public class Main {
 		
 		// 啟動生產者
 		while (producer.getCoffeeStock() > 0) {
-			// 啟動執行緒生產咖啡
+			// 設定訊息內容
+			Scanner scanner = new Scanner(System.in);
+			System.out.print("請設定咖啡名稱(訊息內容):");
+			String message = scanner.next();
+			producer.setMessage(message);
+			scanner.close();
+			
+			// 啟動執行緒生產咖啡(發布訊息)
 			new Thread(producer).start();
-			Thread.sleep(1000); // delay 1 秒
+			//Thread.sleep(1000); // delay 1 秒
 		}
 		
 		System.out.println("程式結束");
