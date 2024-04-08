@@ -14,7 +14,7 @@ public class Main {
 		while (producer.getCoffeeStock() > 0) {
 			// 啟動執行緒生產咖啡
 			new Thread(producer).start();
-			
+			Thread.sleep(2000); // delay 2 秒
 		}
 	}
 
