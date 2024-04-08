@@ -22,7 +22,7 @@ public class Main {
 			
 			// 啟動執行緒生產咖啡(發布訊息)
 			new Thread(producer).start();
-			//Thread.sleep(1000); // delay 1 秒
+			Thread.sleep(1000); // delay 1 秒
 		}
 		scanner.close();
 		
