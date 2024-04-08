@@ -17,8 +17,8 @@ public class Producer implements Runnable {
 	public void run() {
 		System.out.println("Producer 生產者執行...");
 		System.out.println("目前咖啡庫存: " + coffeeStock);
-		// 模擬生產一杯咖啡
-		queue.produce("Producer 生產一杯咖啡");
+		// 模擬生產一杯拿鐵咖啡
+		queue.produce("拿鐵");
 		// 更新庫存
 		coffeeStock--;
 	}
