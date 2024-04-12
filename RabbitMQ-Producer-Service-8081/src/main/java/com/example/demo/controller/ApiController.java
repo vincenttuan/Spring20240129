@@ -20,6 +20,7 @@ public class ApiController {
 		String data = coffeeOrder; // 要送給 MQ 的內容 
 		String routingKey = "coffee-order";
 		String exchangeName = "coffee-exchange";
+		// 將資料傳送給 MQ
 		rabbitTemplate.convertAndSend(exchangeName, routingKey, data);
 		return "Ordered a coffee: " + coffeeOrder;
 	}
