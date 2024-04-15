@@ -13,6 +13,14 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 	
 	// Fanout ---------------------------------------------------------------------
+	/**                          
+	       +-----------------+ ---->  staffQueue
+	 ----> | onsale-exchange | 
+	       +-----------------+ ---->  customerQueue
+	                             ^
+	                             |--- binding
+	 * */
+	
 	@Bean
 	FanoutExchange onSaleExchange() {
 		return new FanoutExchange("onsale-exchange"); // 廣播促銷
