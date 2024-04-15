@@ -12,13 +12,14 @@ public class CoffeeOrderService {
 	@RabbitListener(queues = {"logQueue"})
 	public void receiveLog1(String message) {
 		//System.out.println("統一收到特價廣播: " + message);
-		System.out.println("寫 log1: " + message);
+		new Thread(() -> System.out.println("寫 log1: " + message)).start();
 	}
 	
 	@RabbitListener(queues = {"logQueue"})
 	public void receiveLog2(String message) {
 		//System.out.println("統一收到特價廣播: " + message);
-		System.out.println("寫 log2: " + message);
+		//System.out.println("寫 log2: " + message);
+		new Thread(() -> System.out.println("寫 log2: " + message)).start();
 	}
 	
 	@RabbitListener(queues = {"staffQueue"})
