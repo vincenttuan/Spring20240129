@@ -16,6 +16,15 @@ public class ApiController {
 	@Autowired
 	private RabbitTemplate rabbitTemplate;
 	
+	@PostMapping("/onsale/broadcast")
+	public String onSaleBroascast(@RequestBody String message) {
+		String data = message;
+		String routingKey = ""; // fanout 不用 routingKey
+		String exchangeName = "onsale-exchange";
+		rabbitTemplate.convertAndSend(exchangeName, routingKey, data);
+		return "On-Sale Broadcast: " + message;
+	}
+	
 	@PostMapping("/order")
 	public String order(@RequestBody String coffeeOrder) {
 		String data = coffeeOrder; // 要送給 MQ 的內容 
