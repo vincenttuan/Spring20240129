@@ -57,5 +57,10 @@ public class ApiController {
 		return "Posted news to " + category + " content:"  + content;
 	}
 	
+	// 測試方法: http://localhost:8081/api/iot/send
+    // json1: {"queueName":"temperature-data-queue","data":"25.5 C","headers":{"data-type":"temperature", "unit":"celsius"}}
+    // json2: {"queueName":"humidity-data-queue","data":"80%","headers":{"data-type":"humidity", "unit":"percentage"}}
+    
+	
 	
 }
