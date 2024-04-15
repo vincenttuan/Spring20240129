@@ -37,6 +37,11 @@ public class RabbitMQConfig {
 	}
 	
 	@Bean
+	Queue logQueue() { // Log對列
+		return new Queue("logQueue", true);
+	}
+	
+	@Bean
 	Binding staffBinding(@Qualifier("staffQueue") Queue queue, @Qualifier("onSaleExchange") FanoutExchange exchange) {
 		return BindingBuilder.bind(queue).to(exchange);
 	}
@@ -44,6 +49,11 @@ public class RabbitMQConfig {
 	@Bean
 	Binding customerBinding(Queue customerQueue, FanoutExchange onSaleExchange) {
 		return BindingBuilder.bind(customerQueue).to(onSaleExchange);
+	}
+	
+	@Bean
+	Binding logBinding(Queue logQueue, FanoutExchange onSaleExchange) {
+		return BindingBuilder.bind(logQueue).to(onSaleExchange);
 	}
 	
 	// Direct ---------------------------------------------------------------------

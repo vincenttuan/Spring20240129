@@ -7,19 +7,20 @@ import org.springframework.stereotype.Service;
 public class CoffeeOrderService {
 	
 	// 處理特價廣播
-//	@RabbitListener(queues = {"staffQueue", "customerQueue"})
-//	public void receiveOnSaleBroadcast(String message) {
-//		System.out.println("統一收到特價廣播: " + message);
-//	}
+	@RabbitListener(queues = {"logQueue"})
+	public void receiveOnSaleBroadcast(String message) {
+		//System.out.println("統一收到特價廣播: " + message);
+		System.out.println("寫 log: " + message);
+	}
 	
 	@RabbitListener(queues = {"staffQueue"})
 	public void receiveOnSaleBroadcast2(String message) {
-		System.out.println("staff 收到特價廣播: " + message);
+		System.out.println("staff 收到特價廣播發 email: " + message);
 	}
 	
 	@RabbitListener(queues = {"customerQueue"})
 	public void receiveOnSaleBroadcast3(String message) {
-		System.out.println("customer 收到特價廣播: " + message);
+		System.out.println("customer 收到特價廣播發 sms: " + message);
 	}
 	
 	
