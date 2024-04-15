@@ -45,5 +45,17 @@ public class ApiController {
 		return "Canceled a coffee order: " + data;
 	}
 	
+	// 發送不同類型的新聞到 news-exchange
+	@PostMapping("/news/{category}")
+	// http://localhost:8081/api/news/sports.baseball  對應到 .with("news.sports.*");
+    // http://localhost:8081/api/news/tech.java        對應到 .with("news.tech.#");
+    // http://localhost:8081/api/news/tech.java.spring 對應到 .with("news.tech.#");
+	public String postNews(@PathVariable String category, @RequestBody String content) {
+		String routingKey = "news." + category;
+		String exchangeName = "news-exchange";
+		rabbitTemplate.convertAndSend(exchangeName, routingKey, content);
+		return "Posted news to " + category + " content:"  + content;
+	}
+	
 	
 }
