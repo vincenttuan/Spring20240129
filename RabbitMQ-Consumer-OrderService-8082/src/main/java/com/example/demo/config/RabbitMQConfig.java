@@ -58,8 +58,8 @@ public class RabbitMQConfig {
 	}
 	
 	@Bean
-	Binding logOrderBinding(Queue orderQueue, DirectExchange coffeeExchange) {
-		return BindingBuilder.bind(orderQueue).to(coffeeExchange).with("coffee-order");
+	Binding logOrderBinding(Queue logQueue, DirectExchange coffeeExchange) {
+		return BindingBuilder.bind(logQueue).to(coffeeExchange).with("coffee-order");
 	}
 	
 	// Direct ---------------------------------------------------------------------
