@@ -32,4 +32,12 @@ public class RabbitMQTopicsConfig {
 	Binding bindingSportsNewsQueue(Queue sportsNewsQueue, TopicExchange newsExchange) {
 		return BindingBuilder.bind(sportsNewsQueue).to(newsExchange).with("news.sports.*");
 	}
+	
+	@Bean
+	// "news.tech.#" `.#` 更加靈活，可以匹配任意數量的單詞，包括零個。
+    // 例如: news.tech, news.tech.python, news.tech.java.spring
+	Binding bindingTechNewsQueue(Queue techNewsQueue, TopicExchange newsExchange) {
+		return BindingBuilder.bind(techNewsQueue).to(newsExchange).with("news.tech.#");
+	}
+	
 }
