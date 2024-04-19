@@ -17,7 +17,7 @@ async function fetchBentos() {
     bentos.forEach(bento => {
         const option = document.createElement('option');
         option.value = bento.id;
-        option.textContent = `${bento.bentoName}/${bento.quantity} - $${bento.price}`;
+        option.textContent = `${bento.name}/${bento.quantity} - $${bento.price}`;
         select.appendChild(option);
     });
 }
@@ -30,7 +30,7 @@ async function fetchOrders() {
     orders.forEach(order => {
         const item = document.createElement('li');
         // 使用 innerHTML 插入包含HTML元素的字符串
-        item.innerHTML = `訂購了 ${order.amount} 個 ${order.bento.bentoName} 便當，共 $${order.amount * order.bento.price}。<a href="#" onclick="deleteOrder(${order.id})">刪除</a>`;
+        item.innerHTML = `訂購了 ${order.amount} 個 ${order.bento.name} 便當，共 $${order.amount * order.bento.price}。<a href="#" onclick="deleteOrder(${order.id})">刪除</a>`;
         list.appendChild(item);
     });
     
