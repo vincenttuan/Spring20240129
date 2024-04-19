@@ -16,13 +16,13 @@ public class Bento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(unique = true, nullable=false, length=50)
+	@Column(name="bento_name", unique = true, nullable=false, length=50)
 	private String name;
 	
-	@Column(nullable=false, columnDefinition="0")
+	@Column(name="bento_price", nullable=false, columnDefinition="integer default 0")
 	private Integer price;
 	
-	@Column(nullable=false, columnDefinition="0")
+	@Column(name="bento_quantity", nullable=false, columnDefinition="integer default 0")
 	private Integer quantity; // 庫存
 	
 }
