@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>便當訂購系統</title>
+	<script src="./js/bento.js"></script>
+</head>
+<body style="padding: 10px;">
+    <h1>便當訂購</h1>
+    <select id="bentoSelect">
+        <!-- 便當選項將在這裡動態生成 -->
+    </select>
+    <input type="number" id="quantity" min="1" value="1">
+    <button onclick="orderBento()">訂購</button>
+
+    <h2>訂購紀錄</h2>
+    <ul id="orderList">
+        <!-- 訂購紀錄將在這裡動態列出 -->
+    </ul>
+	<div id="totalPrice"></div>
+
+</body>
+</html>
