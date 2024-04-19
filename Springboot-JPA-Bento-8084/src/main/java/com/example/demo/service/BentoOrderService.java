@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,5 +42,22 @@ public class BentoOrderService {
 		return bentoOrder;
 	}
 	
+	@Transactional
+    public void deleteBentoOrder(Long id) {
+        BentoOrder bentoOrder = bentoOrderRepository.findById(id).orElse(null);
+		if (bentoOrder != null) {
+			bentoOrderRepository.delete(bentoOrder);
+			// Bento 的數量要加回來
+			bentoService.increaseBentoQuantity(bentoOrder.getBento().getId(), bentoOrder.getAmount());
+		}
+    }
+	
+	public List<BentoOrder> getAllBentoOrders() {
+		return bentoOrderRepository.findAll();
+	}
+    
+	public BentoOrder getBentoOrderById(Long id) {
+		return bentoOrderRepository.findById(id).orElse(null);
+	}
 	
 }
