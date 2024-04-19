@@ -14,7 +14,7 @@ public interface BentoRepository extends JpaRepository<Bento, Long> {
 	// 減少 Bento 的庫存數量
     @Modifying
     @Transactional
-    @Query("update Bento b set b.quantity = b.quantity - :amount where b.id = :id and b.quantity >= :amount")
+    @Query("update Bento b set b.quantity = b.quantity - :amount where b.id = :id and b.quantity >= :amount") // PQL
     public void decreaseBentoQuantity(@Param("id") Long id, @Param("amount") Integer amount); 
     
     // 增加 Bento 的庫存數量
