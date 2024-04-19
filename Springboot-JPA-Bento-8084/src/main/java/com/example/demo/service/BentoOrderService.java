@@ -8,6 +8,8 @@ import com.example.demo.model.BentoOrder;
 import com.example.demo.repository.BentoOrderRepository;
 import com.example.demo.repository.BentoRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class BentoOrderService {
 	
@@ -17,6 +19,7 @@ public class BentoOrderService {
 	@Autowired
 	private BentoService bentoService;
 	
+	@Transactional
 	public BentoOrder createBentoOrder(BentoOrder bentoOrder) {
 		Long bentoId = bentoOrder.getBento().getId();
 		// 確認是否有此便當
