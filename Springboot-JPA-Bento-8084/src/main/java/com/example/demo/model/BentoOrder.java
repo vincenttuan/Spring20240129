@@ -22,7 +22,7 @@ public class BentoOrder {
 	private Bento bento; // 訂購的便當
 	
 	@Column
-	private Integer amount;
+	private Integer amount; // 訂購數量
 	
 	
 }
